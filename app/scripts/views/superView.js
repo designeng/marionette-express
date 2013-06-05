@@ -1,50 +1,51 @@
 /* @CreateTests */
 define([
-	'backbone', 
-	'underscore', 
-	'marionette', 
-	'Handlebars', 
-	'vent', 
-	'i18n!nls/general'
-	], function(Backbone, _, Marionette, Handlebars, vent,  localizedText) {
+        'backbone',
+        'underscore',
+        'marionette',
+        'Handlebars',
+        'vent',
+        'i18n!nls/general',
+        'hbars!templates/views/superViewTpl'
+    ], function(Backbone, _, Marionette, Handlebars, vent, localizedText, superViewTpl) {
 
-    'use strict';
+        'use strict';
 
-    var superView = Marionette.ItemView.extend({
+        var superView = Marionette.ItemView.extend({
 
-	    template: "<div>Exmple</div>",
+                template: "<div>Exmple</div>",
 
-	    render: function() {	    	
-	    	
-	        var templateParams = _.extend({}, this.model, localizedText),
-	            renderedTemplate = this.template(templateParams);
+                render: function() {
 
-	        this.$el.html(renderedTemplate);
+                    var templateParams = _.extend({}, this.model, localizedText),
+                        renderedTemplate = this.template(templateParams);
 
-	        this.bindUIElements();
-	        this.delegateEvents();
+                    this.$el.html(renderedTemplate);
 
-	        return this;
-	    },
+                    this.bindUIElements();
+                    this.delegateEvents();
 
-	    onShow: function() {	    	
-	    	
-	        console.log("onShow")
+                    return this;
+                },
 
-	        return this;
-	    },
+                onShow: function() {
 
-	    onClose: function() {
+                    console.log("onShow")
 
-	        return this;
-	    },
+                    return this;
+                },
 
-	    onChange: function() {
+                onClose: function() {
 
-	        return this;
-	    }
-	});		
+                    return this;
+                },
 
-    
-    return superView;
-});
+                onChange: function() {
+
+                    return this;
+                }
+            });
+
+
+        return superView;
+    });

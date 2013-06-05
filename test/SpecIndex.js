@@ -14,9 +14,15 @@ define(function() {
 		,"spec/views/makeView.js"
 		,"spec/views/strongView.js"
 		,"spec/collections/todocollection.js"
+		,"spec/views/extendedTemplateParamsView.js"
+		,"spec/views/superView.js"
+		,"spec/views/testView.js"
     ]
   };
 });
+
+
+
 
 
 

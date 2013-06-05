@@ -6,9 +6,42 @@ var express = require('express'),
   extname = path.extname,
   join = path.join,
   app = express.createServer(),
-  port = 8084;
+  port = process.env.PORT || 8084;
 
 var grunt = require("grunt");
+
+var editorOptions = {
+  editor: "Sublime Text 2",
+  openfile: false //open file with editor?
+}
+
+var specOptions = {
+  scriptsBaseDir: "app/scripts",
+  specBaseDir: "test/spec",
+  specPrefix: "spec",
+  specIndex: "test/SpecIndex.js",
+  specTemplate: "templates/spec.js",
+  fileExtention: "js",
+  editor: editorOptions.editor,
+  openfile: editorOptions.openfile
+};
+
+var templateOptions = {
+  scriptsBaseDir: "app/scripts",
+  tplBaseDir: "app/templates",
+  appPrefix: "app/", //to delete from beginning for inserting path-line in define
+  specIndex: "test/SpecIndex.js",
+  tplTemplate: "templates/tpl.html",
+  tplPathSuffix: "Tpl",
+  fileExtention: "js",
+  editor: editorOptions.editor,
+  openfile: editorOptions.openfile
+};
+
+//where ...Views.js located
+//but for Models specs also con be created
+//TODO: change array name for more apropriate
+var watchFolders = ["views", "ui.components"];
 
 //previosly written grunt tasks in different modules
 var autocreation = require(__dirname + '/lib/tasks/autocreation');
@@ -53,7 +86,7 @@ function html(files, dir, useIcons) {
     var icon = '',
       classes = [],
       toolsTpl = '',
-      toolsTest = '',
+      toolsSpec = '',
       toolsCss = '';
 
     if (useIcons && '..' != file) {
@@ -64,15 +97,15 @@ function html(files, dir, useIcons) {
     }
 
     if (file.indexOf(".js") > 0) {
-      toolsTpl = '<div class="tools-tpl" data-file="' + join(dir, file) + '"></div>';
-      toolsTest = '<div class="tools-test" data-file="' + join(dir, file) + '"></div>';
+      toolsTpl = '<div class="tools-tpl created" data-file="' + join(dir, file) + '" data-tpl-file="' + file + '"></div>';
+      toolsSpec = '<div class="tools-spec created" data-file="' + join(dir, file) + '"></div>';
     }
 
     if (file.indexOf(".html") > 0) {
       toolsCss = '<div class="tools-css" data-file="' + join(dir, file) + '"></div>';
     }
 
-    return '<li><a href="' + join(dir, file) + '" class="' + classes.join(' ') + '"' + ' title="' + file + '">' + icon + file + toolsTpl + toolsTest + toolsCss + '</a></li>';
+    return '<li><a href="' + join(dir, file) + '" class="' + classes.join(' ') + '"' + ' title="' + file + '">' + icon + file + toolsTpl + toolsSpec + toolsCss + '</a></li>';
 
   }).join('\n') + '</ul>';
 }
@@ -224,23 +257,12 @@ app.configure(function() {
 
       content = content.toString();
 
-      var options = {
-        scriptsBaseDir: "app/scripts",
-        specBaseDir: "test/spec",
-        specPrefix: "spec",
-        specIndex: "test/SpecIndex.js",
-        specTemplate: "templates/spec.js",
+      _.extend(specOptions, {
+        relativePath: (str.replace("/" + specOptions.scriptsBaseDir, "")).substr(0, str.lastIndexOf(".")),
         originPath: str,
-        fileExtention: "js",
-        editor: "Sublime Text 2",
-        openfile: true //open file with editor?
-      }
-
-      _.extend(options, {
-        relativePath: (str.replace("/" + options.scriptsBaseDir, "")).substr(0, str.lastIndexOf("."))
       });
 
-      var result = autocreation.createTests(content, options);
+      var result = autocreation.createTests(content, specOptions);
 
       res.send(result);
     });
@@ -293,30 +315,74 @@ app.configure(function() {
 
       content = content.toString();
 
-
-
-      var options = {
-        scriptsBaseDir: "app/scripts",
-        tplBaseDir: "app/templates",
-        appPrefix: "app/",//to delete from beginning for inserting path-line in define
-        specIndex: "test/SpecIndex.js",
-        tplTemplate: "templates/tpl.html",
+      _.extend(templateOptions, {
+        relativePath: (str.replace("/" + templateOptions.scriptsBaseDir, "")).substr(0, str.lastIndexOf(".")),
         originPath: str,
-        tplPath: tplPath,
-        tplPathSuffix: "Tpl",
-        fileExtention: "js",
-        editor: "Sublime Text 2",
-        openfile: true //open file with editor?
-      }
-
-      _.extend(options, {
-        relativePath: (str.replace("/" + options.scriptsBaseDir, "")).substr(0, str.lastIndexOf("."))
+        tplPath: tplPath
       });
 
-      var result = templateForJs.createTemplate(content, options);
+      var result = templateForJs.createTemplate(content, templateOptions);
 
       res.send(result);
     });
+  });
+
+  //find already created specs
+  app.get('/specs.json', function(req, res) {
+    var str = req.url,
+      content = "{";
+
+    function findSpecForFile(abspath, rootdir, subdir, filename) {
+      if (subdir) {
+        var pathArr = subdir.split("/"),
+          folder = inArray(watchFolders, pathArr[1]);
+        if (pathArr[0] == "scripts" && pathArr[1] != undefined && folder && filename.indexOf(".js") != -1) {
+          var specPath = specOptions.specBaseDir + "/" + folder + "/" + filename;
+          if (grunt.file.exists(specPath)) {
+            content += '"/' + abspath + '":"' + specPath + '",';
+          } else {
+
+          }
+        }
+      }
+    }
+
+    grunt.file.recurse("app", findSpecForFile);
+    if (content.length > 1) {
+      content = content.substring(0, content.length - 1);
+    }
+    content += "}";
+    res.send(content);
+  });
+
+  //find already created templates
+  app.get('/templates.json', function(req, res) {
+    var str = req.url,
+      content = "{";
+
+    function findTemplateForFile(abspath, rootdir, subdir, filename) {
+      if (subdir) {
+        var pathArr = subdir.split("/"),
+          folder = inArray(watchFolders, pathArr[1]);
+        if (pathArr[0] == "scripts" && pathArr[1] != undefined && folder && filename.indexOf(".js") != -1) {
+          var tplPath = templateOptions.tplBaseDir + "/" + folder + "/" + filename.replace(".js", ".html");
+          if (grunt.file.exists(tplPath)) {
+            content += '"/' + abspath + '":"' + tplPath + '",';
+          } else {
+
+          }
+        }
+      }
+    }
+
+    grunt.file.recurse("app", findTemplateForFile);
+    if (content.length > 1) {
+      content = content.substring(0, content.length - 1);
+    }
+
+    content += "}";
+
+    res.send(content);
   });
 
 
@@ -326,3 +392,14 @@ app.configure(function() {
 });
 
 app.listen(port);
+
+//------ util funcs ------
+
+function inArray(array, value) {
+  for (var i = 0, l = array.length; i < l; i++) {
+    if (array[i] === value) {
+      return value;
+    }
+  }
+  return false;
+}

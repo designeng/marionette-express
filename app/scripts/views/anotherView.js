@@ -1,42 +1,38 @@
 /* @CreateTests */
 define([
-	'backbone', 
-	'underscore', 
-	'marionette', 
-	'Handlebars', 
-	'vent', 
-	'i18n!nls/general'
-	], function(Backbone, _, Marionette, Handlebars, vent,  localizedText) {
+        'backbone',
+        'underscore',
+        'marionette',
+        'Handlebars',
+        'vent',
+        'i18n!nls/general',
+        'hbars!templates/views/anotherViewTpl'
+    ], function(Backbone, _, Marionette, Handlebars, vent, localizedText, anotherViewTpl) {
 
-    'use strict';
+        'use strict';
 
-    var anotherView = Marionette.ItemView.extend({
+        var anotherView = Marionette.ItemView.extend({
+                template: anotherViewTpl,
 
-	    template: "<div>Exmple</div>",
+                render: function() {
+                    var templateParams = _.extend({}, this.model, localizedText),
+                        renderedTemplate = this.template(templateParams);
+                    this.$el.html(renderedTemplate);
+                    return this;
+                },
 
-	    render: function() {	    	
-	    	
-	        var templateParams = _.extend({}, this.model, localizedText),
-	            renderedTemplate = this.template(templateParams);
 
-	        this.$el.html(renderedTemplate);
 
-	        this.bindUIElements();
-	        this.delegateEvents();
+                onShow: function() {
 
-	        return this;
-	    },
+                    console.log("onShow")
 
-	    onShow: function() {	    	
-	    	
-	        console.log("onShow")
+                    return this;
+                }
+            });
 
-	        return this;
-	    }
-	});
 
-		
 
-    
-    return anotherView;
-});
+
+        return anotherView;
+    });
