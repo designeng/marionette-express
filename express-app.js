@@ -10,6 +10,12 @@ var express = require('express'),
 
 var grunt = require("grunt");
 
+/* -------------- Settings ------------------ */
+
+//watchFolders - where ...Views.js located
+//but for Models specs also con be created
+//TODO: change array name for more apropriate
+
 var editorOptions = {
   editor: "Sublime Text 2",
   openfile: false //open file with editor?
@@ -22,6 +28,7 @@ var specOptions = {
   specIndex: "test/SpecIndex.js",
   specTemplate: "templates/spec.js",
   fileExtention: "js",
+  watchFolders: ["views", "ui.components"],
   editor: editorOptions.editor,
   openfile: editorOptions.openfile
 };
@@ -34,14 +41,19 @@ var templateOptions = {
   tplTemplate: "templates/tpl.html",
   tplPathSuffix: "Tpl",
   fileExtention: "js",
+  watchFolders: ["views", "ui.components"],
   editor: editorOptions.editor,
   openfile: editorOptions.openfile
 };
 
-//where ...Views.js located
-//but for Models specs also con be created
-//TODO: change array name for more apropriate
-var watchFolders = ["views", "ui.components"];
+var cssOptions = {
+  templateDir: "app/templates",
+  stylesBaseDir: "app/styles/less", //here must be saved created .css with the same path structure as the source html-template file 
+  editor: editorOptions.editor,
+  openfile: editorOptions.openfile
+}
+/* -------------- /Settings ------------------ */
+
 
 //previosly written grunt tasks in different modules
 var autocreation = require(__dirname + '/lib/tasks/autocreation');
@@ -85,9 +97,13 @@ function html(files, dir, useIcons) {
   return '<ul id="files">' + files.map(function(file) {
     var icon = '',
       classes = [],
+      re,
+      found,
+      disableClass = '',
       toolsTpl = '',
       toolsSpec = '',
       toolsCss = '';
+
 
     if (useIcons && '..' != file) {
       icon = icons[extname(file)] || icons.
@@ -97,12 +113,21 @@ function html(files, dir, useIcons) {
     }
 
     if (file.indexOf(".js") > 0) {
-      toolsTpl = '<div class="tools-tpl created" data-file="' + join(dir, file) + '" data-tpl-file="' + file + '"></div>';
+
+      //Entities without tools-tpl support (we can't create template for model, controller, router... what else?)
+      if (file.match(/model/i) || file.match(/router/i) || file.match(/controller/i)) {
+        disableClass = 'disable';
+      } else {
+        console.log("No match for ", file)
+      }
+
+
+      toolsTpl = '<div class="tools-tpl created ' + disableClass + '" data-file="' + join(dir, file) + '" data-tpl-file="' + file + '"></div>';
       toolsSpec = '<div class="tools-spec created" data-file="' + join(dir, file) + '"></div>';
     }
 
     if (file.indexOf(".html") > 0) {
-      toolsCss = '<div class="tools-css" data-file="' + join(dir, file) + '"></div>';
+      toolsCss = '<div class="tools-css created" data-file="' + join(dir, file) + '"></div>';
     }
 
     return '<li><a href="' + join(dir, file) + '" class="' + classes.join(' ') + '"' + ' title="' + file + '">' + icon + file + toolsTpl + toolsSpec + toolsCss + '</a></li>';
@@ -162,14 +187,6 @@ app.configure(function() {
     icons: true
   }));
 
-  /*
-  app.use('/create/:file', function(req, res, next){
-      var file = req.params.file;
-      console.log(file);
-      res.end(file);
-  });
-*/
-
   //source highliter
   //js
   app.get('/*/*.js', viewSource);
@@ -189,6 +206,7 @@ app.configure(function() {
     if ((req.url).indexOf(".js") >= 0) {
       codeclass = "js";
     }
+
     if ((req.url).indexOf(".html") >= 0) {
       codeclass = "html";
     }
@@ -284,16 +302,12 @@ app.configure(function() {
 
       var stylesFileExtention = "css";
 
-      var options = {
-        htmlCode: content,
+      _.extend(cssOptions, {
         changedFilePath: str,
-        templateDir: "app/templates",
-        stylesBaseDir: "app/styles/less", //here must be saved created .css with the same path structure as the source html-template file 
-        editor: "Sublime Text 2",
-        openfile: true //open file with editor?
-      }
+        htmlCode: content
+      });
 
-      var result = makeCssFromHtml.make(content, options);
+      var result = makeCssFromHtml.make(content, cssOptions);
 
       res.send(result);
     });
@@ -333,21 +347,26 @@ app.configure(function() {
       content = "{";
 
     function findSpecForFile(abspath, rootdir, subdir, filename) {
-      if (subdir) {
-        var pathArr = subdir.split("/"),
-          folder = inArray(watchFolders, pathArr[1]);
-        if (pathArr[0] == "scripts" && pathArr[1] != undefined && folder && filename.indexOf(".js") != -1) {
-          var specPath = specOptions.specBaseDir + "/" + folder + "/" + filename;
-          if (grunt.file.exists(specPath)) {
-            content += '"/' + abspath + '":"' + specPath + '",';
-          } else {
+      if (filename.indexOf(".js") != -1) {
+        for (var i = 0, l = specOptions.watchFolders.length; i < l; i++) {
+          if (abspath.indexOf(specOptions.scriptsBaseDir + "/" + specOptions.watchFolders[i]) != -1) {
 
+            console.log("findSpecForFile".red, abspath, rootdir, subdir, filename.green);
+
+            var specPath = abspath.replace(specOptions.scriptsBaseDir, "");
+            specPath = specOptions.specBaseDir + specPath;
+
+            if (grunt.file.exists(specPath)) {
+              content += '"/' + abspath + '":"' + specPath + '",';
+            } else {
+
+            }
           }
         }
       }
     }
 
-    grunt.file.recurse("app", findSpecForFile);
+    grunt.file.recurse(specOptions.scriptsBaseDir, findSpecForFile);
     if (content.length > 1) {
       content = content.substring(0, content.length - 1);
     }
@@ -360,10 +379,11 @@ app.configure(function() {
     var str = req.url,
       content = "{";
 
+    //fix me! remove all logic with folder, pathArr
     function findTemplateForFile(abspath, rootdir, subdir, filename) {
       if (subdir) {
         var pathArr = subdir.split("/"),
-          folder = inArray(watchFolders, pathArr[1]);
+          folder = inArray(templateOptions.watchFolders, pathArr[1]);
         if (pathArr[0] == "scripts" && pathArr[1] != undefined && folder && filename.indexOf(".js") != -1) {
           var tplPath = templateOptions.tplBaseDir + "/" + folder + "/" + filename.replace(".js", ".html");
           if (grunt.file.exists(tplPath)) {
@@ -376,6 +396,41 @@ app.configure(function() {
     }
 
     grunt.file.recurse("app", findTemplateForFile);
+    if (content.length > 1) {
+      content = content.substring(0, content.length - 1);
+    }
+
+    content += "}";
+
+    res.send(content);
+  });
+
+  //find already created for html-template .css
+  app.get('/css.json', function(req, res) {
+    var str = req.url,
+      cssPath = "",
+      content = "{";
+
+    function findCssForFile(abspath, rootdir, subdir, filename) {
+      if (abspath.indexOf(cssOptions.templateDir) != -1 && filename.indexOf(".html") != -1) {
+
+
+        cssPath = abspath.replace(cssOptions.templateDir, "");
+        cssPath = cssPath.replace(".html", ".css");
+
+        var cssPath = cssOptions.stylesBaseDir + cssPath;
+
+        console.log(filename, cssPath.green, subdir)
+
+        if (grunt.file.exists(cssPath)) {
+          content += '"/' + abspath + '":"' + cssPath + '",';
+        } else {
+          console.log("no".red, abspath, cssPath.green)
+        }
+      }
+    }
+
+    grunt.file.recurse(cssOptions.templateDir, findCssForFile);
     if (content.length > 1) {
       content = content.substring(0, content.length - 1);
     }

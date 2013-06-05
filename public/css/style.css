@@ -174,3 +174,7 @@ ul#files li a.highlight {
 .created{
   opacity: 0.2;
 }
+
+.disable{
+  display: none;
+}

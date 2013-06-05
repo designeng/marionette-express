@@ -17,9 +17,13 @@ define(function() {
 		,"spec/views/extendedTemplateParamsView.js"
 		,"spec/views/superView.js"
 		,"spec/views/testView.js"
+		,"spec/ui.components/calendar/day/dayView.js"
+		,"spec/ui.components/calendar/day/dayModel.js"
     ]
   };
 });
+
+
 
 
 

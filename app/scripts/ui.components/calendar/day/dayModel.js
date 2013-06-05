@@ -1,18 +1,27 @@
 define([
-	"marionette",
-	"vent"
-	], function ( Marionette, Vent) {
+        template: dayModelTpl,
 
-	'use strict';
+        render: function() {
+            var renderedTemplate = this.template(this.model);
+            this.$el.html(renderedTemplate);
+            return this;
+        },
 
-	var dayModel = Backbone.Model.extend({
+        "marionette",
+        "vent",
+        'hbars!templates/ui.components/calendar/day/dayModelTpl'
+    ], function(Marionette, Vent, dayModelTpl) {
 
-		defaults: {
-			date: '',
-			day: null
-		}
-		
-	});
+        'use strict';
 
-	return dayModel;
-});
+        var dayModel = Backbone.Model.extend({
+
+                defaults: {
+                    date: '',
+                    day: null
+                }
+
+            });
+
+        return dayModel;
+    });

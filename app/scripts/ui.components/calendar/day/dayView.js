@@ -1,50 +1,50 @@
 define(
-	[
-	"marionette",
-	"vent",
-	'hbars!/templates/ui.components/calendar/day/dayViewTpl'
-	],
-	function(Marionette, Vent, DayViewTemplate){
-	
-	var DayView = Backbone.Marionette.ItemView.extend({
+    [
+        "marionette",
+        "vent",
+        'hbars!/templates/ui.components/calendar/day/dayViewTpl',
+        'hbars!templates/ui.components/calendar/day/dayViewTpl'
+    ], function(Marionette, Vent, DayViewTemplate, dayViewTpl) {
 
-		template: DayViewTemplate,
+        var DayView = Backbone.Marionette.ItemView.extend({
 
-		initialize: function(options){
-    		this.model = {
-    			dayNumber: 1
-    		}
-  		},
+                template: DayViewTemplate,
 
-		render: function() {
-	        var templateHtml = this.template(this.model);
-	        this.$el.html(templateHtml);
-	        return this;
-	    },
+                initialize: function(options) {
+                    this.model = {
+                        dayNumber: 1
+                    }
+                },
 
-	    events: {
-	      "firstevent": "firstHandler",
-	      "secondevent": "secondHandler"
-	      // . . . . . . . . . 
-	    },
+                render: function() {
+                    var templateHtml = this.template(this.model);
+                    this.$el.html(templateHtml);
+                    return this;
+                },
 
-	    firstHandler: function(event) {
-	      //Vent.trigger("dropdownlist:first");
-	      console.log("DropDownListView firstHandler");
-	    },
+                events: {
+                    "firstevent": "firstHandler",
+                    "secondevent": "secondHandler"
+                    // . . . . . . . . . 
+                },
 
-	    secondHandler: function(event) {
-	      Vent.trigger("pager:last");
-	    },
+                firstHandler: function(event) {
+                    //Vent.trigger("dropdownlist:first");
+                    console.log("DropDownListView firstHandler");
+                },
 
-	    onShow: function() {
-	        console.log("DropDownListView onShow");
-	        Vent.trigger("firstevent");
-	    }
+                secondHandler: function(event) {
+                    Vent.trigger("pager:last");
+                },
+
+                onShow: function() {
+                    console.log("DropDownListView onShow");
+                    Vent.trigger("firstevent");
+                }
 
 
-  	});
-  	
+            });
 
-	return DayView;
-});
+
+        return DayView;
+    });

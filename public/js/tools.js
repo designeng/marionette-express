@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	//express router return templates.json
+	// .json everywhere is returned by express router
 	$.get('/templates.json', function(data) {
 		var templateCreated = [],
 			selector = '.tools-tpl';
@@ -16,7 +16,7 @@ $(document).ready(function() {
 		});
 	});
 
-	//express router return specs.json
+
 	$.get('/specs.json', function(data) {
 		var specCreated = [],
 			selector = '.tools-spec';
@@ -28,6 +28,22 @@ $(document).ready(function() {
 		$('div').filter(selector).each(function() {
 			var file = $(this).data('file');
 			if (!inArray(specCreated, file)) {
+				$(this).removeClass("created")
+			}
+		});
+	});
+
+	$.get('/css.json', function(data) {
+		var cssCreated = [],
+			selector = '.tools-css';
+
+		$.each(JSON.parse(data), function(key, val) {
+			cssCreated.push(key);
+		});
+
+		$('div').filter(selector).each(function() {
+			var file = $(this).data('file');
+			if (!inArray(cssCreated, file)) {
 				$(this).removeClass("created")
 			}
 		});
