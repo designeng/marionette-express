@@ -76,6 +76,17 @@
     <!-- jquery-1.10.1.min  above all needed funcs -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
     <script type="text/javascript" src="/public/js/tools.js"></script>
-    <script type="text/javascript" src="/public/js/storage.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io.connect('http://localhost:8084');
+      socket.on('added', function (data) {
+        console.log(data);
+        window.location.reload();
+      });
+      socket.on('deleted', function (data) {
+        console.log(data);
+        window.location.reload();
+      });
+    </script>
   </body>
 </html>

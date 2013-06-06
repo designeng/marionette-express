@@ -3,10 +3,20 @@ var express = require('express'),
   fs = require('fs'),
   path = require('path'),
   colors = require('colors'),
+  gaze = require('gaze'),
   extname = path.extname,
   join = path.join,
   app = express.createServer(),
+  io = require('socket.io').listen(app, {
+    log: false
+  }),
+  watchSocket,
   port = process.env.PORT || 8084;
+
+io.sockets.on('connection', function(socket) {
+  console.log("watchSocket connection started".cyan)
+  watchSocket = socket;
+});
 
 var grunt = require("grunt");
 
@@ -54,6 +64,42 @@ var cssOptions = {
 }
 /* -------------- /Settings ------------------ */
 
+//watch files in listed in array places 
+gaze(['app/scripts/*.js',
+    'app/scripts/**/*.js',
+    'app/scripts/**/**/*.js',
+    'test/spec/**/*.js',
+    'app/templates/**/*.html',
+], function(err, watcher) {
+  // Get all watched files
+  //console.log(this.watched());
+
+  // On file changed
+  this.on('changed', function(filepath) {
+    console.log(filepath + ' was changed');
+  });
+
+  // On file added
+  this.on('added', function(filepath) {
+    console.log(filepath + ' was added');
+
+    watchSocket.emit('added', {
+      file: filepath
+    });
+  });
+
+  // On file deleted
+  this.on('deleted', function(filepath) {
+    console.log(filepath + ' was deleted!');
+
+    watchSocket.emit('deleted', {
+      file: filepath
+    });
+  });
+
+  // Get watched files with relative paths
+  //console.log(this.relative());
+});
 
 //previosly written grunt tasks in different modules
 var autocreation = require(__dirname + '/lib/tasks/autocreation');
@@ -351,8 +397,6 @@ app.configure(function() {
         for (var i = 0, l = specOptions.watchFolders.length; i < l; i++) {
           if (abspath.indexOf(specOptions.scriptsBaseDir + "/" + specOptions.watchFolders[i]) != -1) {
 
-            console.log("findSpecForFile".red, abspath, rootdir, subdir, filename.green);
-
             var specPath = abspath.replace(specOptions.scriptsBaseDir, "");
             specPath = specOptions.specBaseDir + specPath;
 
@@ -374,28 +418,43 @@ app.configure(function() {
     res.send(content);
   });
 
+  /*
+  var templateOptions = {
+  scriptsBaseDir: "app/scripts",
+  tplBaseDir: "app/templates",
+  appPrefix: "app/", //to delete from beginning for inserting path-line in define
+  specIndex: "test/SpecIndex.js",
+  tplTemplate: "templates/tpl.html",
+  tplPathSuffix: "Tpl",
+  fileExtention: "js",
+  watchFolders: ["views", "ui.components"],
+  editor: editorOptions.editor,
+  openfile: editorOptions.openfile
+};
+*/
+
   //find already created templates
   app.get('/templates.json', function(req, res) {
     var str = req.url,
       content = "{";
 
-    //fix me! remove all logic with folder, pathArr
     function findTemplateForFile(abspath, rootdir, subdir, filename) {
-      if (subdir) {
-        var pathArr = subdir.split("/"),
-          folder = inArray(templateOptions.watchFolders, pathArr[1]);
-        if (pathArr[0] == "scripts" && pathArr[1] != undefined && folder && filename.indexOf(".js") != -1) {
-          var tplPath = templateOptions.tplBaseDir + "/" + folder + "/" + filename.replace(".js", ".html");
-          if (grunt.file.exists(tplPath)) {
-            content += '"/' + abspath + '":"' + tplPath + '",';
-          } else {
+      if (filename.indexOf(".js") != -1) {
 
-          }
+        var tplPath = abspath.replace(templateOptions.scriptsBaseDir, "");
+        tplPath = tplPath.replace(".js", ".html");
+
+        var tplPath = templateOptions.tplBaseDir + tplPath;
+
+        if (grunt.file.exists(tplPath)) {
+          content += '"/' + abspath + '":"' + tplPath + '",';
+        } else {
+
         }
       }
     }
 
-    grunt.file.recurse("app", findTemplateForFile);
+    grunt.file.recurse(templateOptions.scriptsBaseDir, findTemplateForFile);
     if (content.length > 1) {
       content = content.substring(0, content.length - 1);
     }
@@ -408,24 +467,20 @@ app.configure(function() {
   //find already created for html-template .css
   app.get('/css.json', function(req, res) {
     var str = req.url,
-      cssPath = "",
       content = "{";
 
     function findCssForFile(abspath, rootdir, subdir, filename) {
       if (abspath.indexOf(cssOptions.templateDir) != -1 && filename.indexOf(".html") != -1) {
 
-
-        cssPath = abspath.replace(cssOptions.templateDir, "");
+        var cssPath = abspath.replace(cssOptions.templateDir, "");
         cssPath = cssPath.replace(".html", ".css");
 
-        var cssPath = cssOptions.stylesBaseDir + cssPath;
-
-        console.log(filename, cssPath.green, subdir)
+        cssPath = cssOptions.stylesBaseDir + cssPath;
 
         if (grunt.file.exists(cssPath)) {
           content += '"/' + abspath + '":"' + cssPath + '",';
         } else {
-          console.log("no".red, abspath, cssPath.green)
+          
         }
       }
     }
@@ -447,14 +502,3 @@ app.configure(function() {
 });
 
 app.listen(port);
-
-//------ util funcs ------
-
-function inArray(array, value) {
-  for (var i = 0, l = array.length; i < l; i++) {
-    if (array[i] === value) {
-      return value;
-    }
-  }
-  return false;
-}

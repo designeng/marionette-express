@@ -20,9 +20,11 @@ define(function() {
 		,"spec/ui.components/calendar/day/dayView.js"
 		,"spec/ui.components/calendar/day/dayModel.js"
 		,"spec/views/experimentalView.js"
+		,"spec/ui.components/calendar/day/dayController.js"
     ]
   };
 });
+
 
 
 
