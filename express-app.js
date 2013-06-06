@@ -28,7 +28,7 @@ var grunt = require("grunt");
 
 var editorOptions = {
   editor: "Sublime Text 2",
-  openfile: false //open file with editor?
+  openfile: true //open file with editor?
 }
 
 var specOptions = {
@@ -67,9 +67,10 @@ var cssOptions = {
 //watch files in listed in array places 
 gaze(['app/scripts/*.js',
     'app/scripts/**/*.js',
-    'app/scripts/**/**/*.js',
+    'app/scripts/ui.components/**/*.js',
     'test/spec/**/*.js',
     'app/templates/**/*.html',
+    'app/templates/ui.components/**/*.html'
 ], function(err, watcher) {
   // Get all watched files
   //console.log(this.watched());
@@ -164,7 +165,7 @@ function html(files, dir, useIcons) {
       if (file.match(/model/i) || file.match(/router/i) || file.match(/controller/i)) {
         disableClass = 'disable';
       } else {
-        console.log("No match for ", file)
+
       }
 
 
@@ -442,7 +443,7 @@ app.configure(function() {
       if (filename.indexOf(".js") != -1) {
 
         var tplPath = abspath.replace(templateOptions.scriptsBaseDir, "");
-        tplPath = tplPath.replace(".js", ".html");
+        tplPath = tplPath.replace(".js", templateOptions.tplPathSuffix + ".html");
 
         var tplPath = templateOptions.tplBaseDir + tplPath;
 
