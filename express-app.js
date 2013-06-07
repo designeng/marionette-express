@@ -11,7 +11,8 @@ var express = require('express'),
     log: false
   }),
   watchSocket,
-  port = process.env.PORT || 8084;
+  applicationPort = process.env.PORT || 8084;
+
 
 io.sockets.on('connection', function(socket) {
   console.log("watchSocket connection started".cyan)
@@ -19,6 +20,20 @@ io.sockets.on('connection', function(socket) {
 });
 
 var grunt = require("grunt");
+
+var winston = require('winston'),
+  logPath = 'log/common.log';
+winston.add(winston.transports.File, {
+  filename: logPath
+});
+
+
+/*
+var log = require('./lib/logger').config({
+  format: "<%= timestamp %> >> <%= event %> <%= padding %> >> <%= message %>\n",
+  console: false
+});
+*/
 
 /* -------------- Settings ------------------ */
 
@@ -28,7 +43,7 @@ var grunt = require("grunt");
 
 var editorOptions = {
   editor: "Sublime Text 2",
-  openfile: true //open file with editor?
+  openfile: false //open file with editor?
 }
 
 var specOptions = {
@@ -93,6 +108,8 @@ gaze(['app/scripts/*.js',
   this.on('deleted', function(filepath) {
     console.log(filepath + ' was deleted!');
 
+    winston.log('warn', filepath.replace(__dirname, "") + " was deleted");
+
     watchSocket.emit('deleted', {
       file: filepath
     });
@@ -100,6 +117,13 @@ gaze(['app/scripts/*.js',
 
   // Get watched files with relative paths
   //console.log(this.relative());
+});
+
+//watch common log file
+gaze('log/common.log', function(err, watcher) {
+  this.on('changed', function(filepath) {
+    watchSocket.emit('logchanged');
+  });
 });
 
 //previosly written grunt tasks in different modules
@@ -118,7 +142,8 @@ _.extend(express.directory, {
         str = str.replace('{style}', style)
           .replace('{files}', html(files, dir, icons))
           .replace('{directory}', dir)
-          .replace('{linked-path}', htmlPath(dir));
+          .replace('{linked-path}', htmlPath(dir))
+          .replace('{port}', applicationPort);
         res.setHeader('Content-Type', 'text/html');
         res.setHeader('Content-Length', str.length);
         res.end(str);
@@ -327,7 +352,7 @@ app.configure(function() {
         originPath: str,
       });
 
-      var result = autocreation.createTests(content, specOptions);
+      var result = autocreation.createTests(content, specOptions, winston);
 
       res.send(result);
     });
@@ -354,7 +379,7 @@ app.configure(function() {
         htmlCode: content
       });
 
-      var result = makeCssFromHtml.make(content, cssOptions);
+      var result = makeCssFromHtml.make(content, cssOptions, winston);
 
       res.send(result);
     });
@@ -382,7 +407,7 @@ app.configure(function() {
         tplPath: tplPath
       });
 
-      var result = templateForJs.createTemplate(content, templateOptions);
+      var result = templateForJs.createTemplate(content, templateOptions, winston);
 
       res.send(result);
     });
@@ -419,22 +444,8 @@ app.configure(function() {
     res.send(content);
   });
 
-  /*
-  var templateOptions = {
-  scriptsBaseDir: "app/scripts",
-  tplBaseDir: "app/templates",
-  appPrefix: "app/", //to delete from beginning for inserting path-line in define
-  specIndex: "test/SpecIndex.js",
-  tplTemplate: "templates/tpl.html",
-  tplPathSuffix: "Tpl",
-  fileExtention: "js",
-  watchFolders: ["views", "ui.components"],
-  editor: editorOptions.editor,
-  openfile: editorOptions.openfile
-};
-*/
-
   //find already created templates
+
   app.get('/templates.json', function(req, res) {
     var str = req.url,
       content = "{";
@@ -466,6 +477,7 @@ app.configure(function() {
   });
 
   //find already created for html-template .css
+
   app.get('/css.json', function(req, res) {
     var str = req.url,
       content = "{";
@@ -481,7 +493,7 @@ app.configure(function() {
         if (grunt.file.exists(cssPath)) {
           content += '"/' + abspath + '":"' + cssPath + '",';
         } else {
-          
+
         }
       }
     }
@@ -496,10 +508,55 @@ app.configure(function() {
     res.send(content);
   });
 
+  //logger enter point here
+
+  app.get('/log.html', function(req, res) {
+    fs.readFile(__dirname + '/public/log.html', 'utf8', function(err, str) {
+      if (err) {
+        console.log(err)
+        res.send('ERROR: ' + err);
+      } else {
+        str = str
+          .replace('{port}', applicationPort);
+        res.send(str);
+      }
+    });
+  });
+
+  app.get('/log.txt', function(req, res) {
+    var lines,
+      delimiter = "|";
+
+    fs.readFile(__dirname + '/log/common.log', 'utf8', function(err, content) {
+      if (err) {
+        console.log("ERROR!", err);
+        res.send("ERROR: " + err);
+        return;
+      }
+      lines = content.split('\n');
+      content = "";
+      for (var l in lines) {
+        var line = lines[l];
+        content += line + delimiter;
+      }
+      if (content.length > 1) {
+        content = content.substring(0, content.length - 1);
+      }
+
+      res.send(content);
+    });
+
+  });
+
+  app.post('/log/clear', function(req, res) {
+    grunt.file.write(logPath, "");
+    res.send("Log cleared");
+  });
+
 
   app.use(express.errorHandler());
 
-  console.log(("SERVER STARTED AT PORT " + port).green)
+  console.log(("SERVER STARTED AT PORT " + applicationPort).green)
 });
 
-app.listen(port);
+app.listen(applicationPort);

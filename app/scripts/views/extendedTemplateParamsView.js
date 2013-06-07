@@ -23,6 +23,9 @@ define([
 
 
 
+
+
+
             });
 
         return ExtendedTemplateParamsView;

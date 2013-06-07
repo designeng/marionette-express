@@ -1,0 +1,70 @@
+<html>
+  <head>
+    <title>{title}</title>
+    <style>
+    ul li {
+      list-style: none;
+      font-size: small;
+    }
+    .message-level{
+      position: absolute;
+      left: 210px;
+    }
+    .info{
+      color: #009933;
+    }
+    .warn{
+      color: #FF9933;
+    }
+    .error{
+      color: red;
+    }
+    .del{
+      color: #99CCCC;
+    }
+    .message{
+      position: absolute;
+      left: 270px;
+    }
+    </style>
+
+  </head>
+    <script type="text/template" class="message">
+      <li>
+        <span class="<%- timestamp %>">[<%- timestamp %>]</span>
+        <span class="<%- level %> message-level"><%- level %>:</span>
+        <span class="message"><%- message %></span>
+      </li>
+    </script>
+
+
+  <body>
+
+    <ul id="log-wrapper"></ul>
+      
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+    <script src="/public/js/underscore.js"></script>
+
+    <script>
+    $(document).ready(function() {
+      $.get('/log.txt', function(data) {
+        if(data.length > 0){
+          var values = data.split("|");
+          //console.log(values.length, values[0]);
+          var compiled = _.template(
+              $( "script.message" ).html()
+          );
+
+          $.each(values, function(key, val) {
+            if(val != ""){
+              var parsed = JSON.parse(val);
+              $("#log-wrapper").append(compiled(parsed));
+            }
+          });
+        }
+      });
+    });
+    </script>
+  </body>
+</html>
