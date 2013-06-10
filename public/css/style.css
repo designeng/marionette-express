@@ -156,6 +156,7 @@ ul#files li a.highlight {
   background: transparent;
   opacity: 0.7;
   color: #888;
+  cursor: pointer;
 }
 /* extend */
 .tools-tpl{

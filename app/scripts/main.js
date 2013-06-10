@@ -15,6 +15,8 @@ require.config({
         text: 'vendors/requirejs-text/text',
         hbars: 'vendors/hbars',
         tpl: 'vendors/tpl',
+        moment: "vendors/moment",
+        interval: "vendors/moment-interval",
         templates: '../templates', //it shoud be so! hbars plugin will read all templates inside     
         'handlebars.helpers': 'helpers/handlebars.helpers',
         i18n: 'vendors/i18n'

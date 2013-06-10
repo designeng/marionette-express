@@ -59,13 +59,8 @@ module.exports = function (grunt) {
             tasks: ['livereload']
           },
           js: {
-            files: ['app/scripts/*.js'], //"first-level" js - tests in specs not needed
+            files: ['app/scripts/*.js', 'app/scripts/**/*.js'], //"first-level" js - tests in specs not needed
             tasks: ['livereload']
-          },
-          js_autocreationtests: {
-            files: ['app/scripts/**/*.js', 'app/scripts/**/**/*.js', 'app/scripts/**/**/**/*.js', 'app/scripts/**/**/**/**/*.js'],
-            //tasks: ['copy', 'clean', 'autocreationtests']
-            tasks: ['autocreationtests', 'livereload']
           },
           html: {
             files: ['app/templates/**/*.html', 'app/templates/**/**/*.html'],

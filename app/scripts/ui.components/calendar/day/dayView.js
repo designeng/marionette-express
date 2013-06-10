@@ -1,50 +1,47 @@
 define(
-    [
+[
         "marionette",
         "vent",
-        'hbars!/templates/ui.components/calendar/day/dayViewTpl',
         'hbars!templates/ui.components/calendar/day/dayViewTpl'
-    ], function(Marionette, Vent, DayViewTemplate, dayViewTpl) {
+], function(Marionette, Vent, dayViewTpl) {
 
-        var DayView = Backbone.Marionette.ItemView.extend({
+    var DayView = Backbone.Marionette.ItemView.extend({
 
-                template: DayViewTemplate,
-
-                initialize: function(options) {
-                    this.model = {
-                        dayNumber: 1
-                    }
-                },
-
+        template: dayViewTpl,
+        /*
                 render: function() {
                     var templateHtml = this.template(this.model);
                     this.$el.html(templateHtml);
                     return this;
                 },
+*/
+        events: {
 
-                events: {
-                    "firstevent": "firstHandler",
-                    "secondevent": "secondHandler"
-                    // . . . . . . . . . 
-                },
+        },
 
-                firstHandler: function(event) {
-                    //Vent.trigger("dropdownlist:first");
-                    console.log("DropDownListView firstHandler");
-                },
+        onShow: function() {
+            console.log("DayView onShow");
+            Vent.trigger("firstevent");
+        },
 
-                secondHandler: function(event) {
-                    Vent.trigger("pager:last");
-                },
+        serializeData: function() {
+            var data = {};
 
-                onShow: function() {
-                    console.log("DropDownListView onShow");
-                    Vent.trigger("firstevent");
-                }
+            if (this.model) {
+                data = this.model.toJSON();
+            } else if (this.collection) {
+                data = {
+                    items: this.collection.toJSON()
+                };
+            }
+
+            console.log("serializeData", this.cid, this.model)
+            return data;
+        },
 
 
-            });
-
-
-        return DayView;
     });
+
+
+    return DayView;
+});

@@ -27,14 +27,6 @@ winston.add(winston.transports.File, {
   filename: logPath
 });
 
-
-/*
-var log = require('./lib/logger').config({
-  format: "<%= timestamp %> >> <%= event %> <%= padding %> >> <%= message %>\n",
-  console: false
-});
-*/
-
 /* -------------- Settings ------------------ */
 
 //watchFolders - where ...Views.js located

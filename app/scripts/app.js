@@ -1,26 +1,29 @@
 /*  @DoNotCreateTests  */
 define([
-    'backbone',
-    'underscore',
-    'marionette',
-    'vent',     
-    'ui.components/calendar/month/MonthView'    
-    ], function(Backbone, _, Marionette, vent, MonthView) {
+        'backbone',
+        'underscore',
+        'marionette',
+        'vent',
+        'moment',
+        'ui.components/calendar/month/monthView',
+        'ui.components/calendar/day/dayView'
+], function(Backbone, _, Marionette, vent, moment, MonthView, DayView) {
     'use strict';
 
     var app = new Marionette.Application();
 
-    var test = function(){
+    var test = function() {
         return "123";
     }
 
     app.test = test;
-    
+
 
     // these regions correspond to #ID's in the index.html 
     app.addRegions({
         content: "#content",
-        menu: "#menu"
+        menu: "#menu",
+        week: "#week"
     });
 
     // marionette app events...
@@ -29,7 +32,7 @@ define([
         Backbone.history.start();
     });
 
-    
+
     // pass in router/controller via options
     app.addInitializer(function(options) {
         // configure for loading templates stored externally...
@@ -48,15 +51,36 @@ define([
 
             return template;
         };
-    }); 
-
-    app.addInitializer(function () {
-        this.content.show(new MonthView({
-            model: {}
-        }));
     });
 
-    
+    app.addInitializer(function() {
+        var a = moment();
+        var monthModel = {
+            year: a.format("YYYY"),
+            monthNumber: a.format("MM"),
+            monthName: a.format("MMMM")
+        }
+
+        var monthView = new MonthView({
+            model: monthModel
+        });
+
+
+        this.content.show(monthView);
+
+
+        this.week.show(new DayView({
+            model: {
+                year: 1234,
+                month: 6
+            }
+
+        }));
+
+
+        this.week.close();
+    });
+
 
     // export the app
     return app;

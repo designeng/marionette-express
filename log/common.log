@@ -1,11 +1,10 @@
-{"level":"info","message":"Template file for /app/scripts/views/strongView.js was created and path inserted into define area","timestamp":"2013-06-07T15:23:07.934Z"}
-{"level":"warn","message":"Path to template already exists in define array in  ./app/scripts/views/strongView.js view","timestamp":"2013-06-07T15:23:07.935Z"}
-{"level":"warn","message":"/app/templates/views/makeViewTpl.html was deleted","timestamp":"2013-06-07T15:23:15.950Z"}
-{"level":"warn","message":"/app/templates/views/extendedTemplateParamsViewTpl.html was deleted","timestamp":"2013-06-07T15:23:15.951Z"}
-{"level":"warn","message":"/app/templates/views/experimentalViewTpl.html was deleted","timestamp":"2013-06-07T15:23:15.951Z"}
-{"level":"warn","message":"/app/templates/views/anotherViewTpl.html was deleted","timestamp":"2013-06-07T15:23:15.952Z"}
-{"level":"warn","message":"/app/templates/views/strongViewTpl.html was deleted","timestamp":"2013-06-07T15:23:15.952Z"}
-{"level":"info","message":"Spec file for /app/scripts/views/nextView.js was created","timestamp":"2013-06-07T15:23:17.689Z"}
-{"level":"info","message":"Spec file for /app/scripts/views/makeView.js was created","timestamp":"2013-06-07T15:23:18.265Z"}
-{"level":"info","message":"Spec file for /app/scripts/views/extendedTemplateParamsView.js was created","timestamp":"2013-06-07T15:23:19.494Z"}
-{"level":"info","message":"Spec file for /app/scripts/views/experimentalView.js was created","timestamp":"2013-06-07T15:23:20.188Z"}
+{"level":"info","message":"Template file for /app/scripts/ui.components/calendar/week/weekView.js was created and path inserted into define area","timestamp":"2013-06-10T12:05:07.687Z"}
+{"level":"info","message":"Template file for /app/scripts/ui.components/calendar/day/dayView.js was created and path inserted into define area","timestamp":"2013-06-10T13:26:10.568Z"}
+{"level":"warn","message":"/app/scripts/ui.components/calendar/month/MonthCollection.js was deleted","timestamp":"2013-06-10T13:29:05.289Z"}
+{"level":"warn","message":"/app/scripts/ui.components/calendar/month/MonthModel.js was deleted","timestamp":"2013-06-10T13:29:10.676Z"}
+{"level":"warn","message":"/app/scripts/ui.components/calendar/month/MonthCollection.js was deleted","timestamp":"2013-06-10T13:29:10.677Z"}
+{"level":"warn","message":"/app/scripts/ui.components/calendar/month/MonthView.js was deleted","timestamp":"2013-06-10T13:29:15.116Z"}
+{"level":"warn","message":"/app/scripts/ui.components/calendar/month/MonthCollection.js was deleted","timestamp":"2013-06-10T13:29:15.117Z"}
+{"level":"warn","message":"/app/scripts/ui.components/calendar/month/MonthCollection.js was deleted","timestamp":"2013-06-10T13:31:09.906Z"}
+{"level":"warn","message":"/app/scripts/ui.components/calendar/month/monthModel.js was deleted","timestamp":"2013-06-10T15:57:06.701Z"}
+{"level":"warn","message":"/app/scripts/ui.components/calendar/month/MonthCollection.js was deleted","timestamp":"2013-06-10T16:54:03.033Z"}
