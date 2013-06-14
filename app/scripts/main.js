@@ -9,6 +9,7 @@ require.config({
         backbone: 'vendors/backbone', // amd version        
         'backbone.eventbinder': 'vendors/backbone.eventbinder', // amd version
         'backbone.babysitter': 'vendors/backbone.babysitter', // amd version
+        subviews: 'vendors/backbone.subviews',
         marionette: 'vendors/backbone.marionette',  // amd version
         'backbone.wreqr': 'vendors/backbone.wreqr', // amd version
         Handlebars: 'vendors/handlebars',

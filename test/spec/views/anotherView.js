@@ -5,7 +5,6 @@ define(["views/anotherView"], function(anotherView) {
 
 /* Expectations:
 
-		expect(t.render).
 		expect(t.onShow).
 
 */

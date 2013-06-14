@@ -63,8 +63,7 @@ module.exports = function (grunt) {
             tasks: ['livereload']
           },
           html: {
-            files: ['app/templates/**/*.html', 'app/templates/**/**/*.html'],
-            //tasks: ['copy', 'clean', 'autocreationtests']
+            files: ['app/templates/**/*.html', 'app/templates/**/**/*.html', 'app/templates/**/**/**/*.html'],
             tasks: ['livereload']
           },
           css: {
@@ -119,14 +118,6 @@ module.exports = function (grunt) {
             stdout: true
           }
         }
-/*
-        autocreationtests: {
-                multiple: {
-                    src: "app/scripts/ui.components/calendar/routeChooser.js",
-                    specIndex: "test/spec/index.js"
-                }
-        }
-*/
     });
 
     // Actually load this plugin's task(s).
@@ -147,8 +138,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-plato');
 
     grunt.registerTask('r', ['connect', 'regarde']);
-
-    grunt.registerTask('a', ['autocreationtests']);//parse with esmorph, create tests
 
     grunt.registerTask('t', ['jasmine']);
 
@@ -180,7 +169,6 @@ module.exports = function (grunt) {
             specTemplate = "templates/spec.js";
 
         relativePath = changedFilePath.replace(scriptsBaseDir, "");
-        //relativePath = specBaseDir + relativePath;
         lastIndex = relativePath.lastIndexOf(".");
         relativePath = relativePath.substr(0, lastIndex);
         relativePath = relativePath + "." + fileExtention;

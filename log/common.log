@@ -1,10 +1,11 @@
-{"level":"info","message":"Template file for /app/scripts/ui.components/calendar/week/weekView.js was created and path inserted into define area","timestamp":"2013-06-10T12:05:07.687Z"}
-{"level":"info","message":"Template file for /app/scripts/ui.components/calendar/day/dayView.js was created and path inserted into define area","timestamp":"2013-06-10T13:26:10.568Z"}
-{"level":"warn","message":"/app/scripts/ui.components/calendar/month/MonthCollection.js was deleted","timestamp":"2013-06-10T13:29:05.289Z"}
-{"level":"warn","message":"/app/scripts/ui.components/calendar/month/MonthModel.js was deleted","timestamp":"2013-06-10T13:29:10.676Z"}
-{"level":"warn","message":"/app/scripts/ui.components/calendar/month/MonthCollection.js was deleted","timestamp":"2013-06-10T13:29:10.677Z"}
-{"level":"warn","message":"/app/scripts/ui.components/calendar/month/MonthView.js was deleted","timestamp":"2013-06-10T13:29:15.116Z"}
-{"level":"warn","message":"/app/scripts/ui.components/calendar/month/MonthCollection.js was deleted","timestamp":"2013-06-10T13:29:15.117Z"}
-{"level":"warn","message":"/app/scripts/ui.components/calendar/month/MonthCollection.js was deleted","timestamp":"2013-06-10T13:31:09.906Z"}
-{"level":"warn","message":"/app/scripts/ui.components/calendar/month/monthModel.js was deleted","timestamp":"2013-06-10T15:57:06.701Z"}
-{"level":"warn","message":"/app/scripts/ui.components/calendar/month/MonthCollection.js was deleted","timestamp":"2013-06-10T16:54:03.033Z"}
+{"level":"info","message":"Template file for /app/scripts/views/strongView.js was created and path inserted into define area","timestamp":"2013-06-14T15:14:09.703Z"}
+{"level":"warn","message":"Path to template already exists in define array in  ./app/scripts/views/strongView.js view","timestamp":"2013-06-14T15:14:09.705Z"}
+{"level":"info","message":"Template file for /app/scripts/views/strongView.js was created and path inserted into define area","timestamp":"2013-06-14T15:14:43.301Z"}
+{"level":"info","message":"Template file for /app/scripts/views/superView.js was created and path inserted into define area","timestamp":"2013-06-14T15:15:15.603Z"}
+{"level":"warn","message":"Path to template already exists in define array in  ./app/scripts/views/superView.js view","timestamp":"2013-06-14T15:15:15.603Z"}
+{"level":"info","message":"Template file for /app/scripts/views/testView.js was created and path inserted into define area","timestamp":"2013-06-14T15:15:29.065Z"}
+{"level":"warn","message":"Path to template already exists in define array in  ./app/scripts/views/testView.js view","timestamp":"2013-06-14T15:15:29.065Z"}
+{"level":"info","message":"Spec file for /app/scripts/views/testView.js was created","timestamp":"2013-06-14T15:16:22.575Z"}
+{"level":"info","message":"Template file for /app/scripts/views/testView.js was created and path inserted into define area","timestamp":"2013-06-14T15:16:31.178Z"}
+{"level":"info","message":"Template file for /app/scripts/views/testView.js was created and path inserted into define area","timestamp":"2013-06-14T15:16:42.736Z"}
+{"level":"warn","message":"Path to template already exists in define array in  ./app/scripts/views/testView.js view","timestamp":"2013-06-14T15:16:42.738Z"}

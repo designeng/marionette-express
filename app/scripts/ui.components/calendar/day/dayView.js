@@ -8,15 +8,19 @@ define(
     var DayView = Backbone.Marionette.ItemView.extend({
 
         template: dayViewTpl,
-        /*
-                render: function() {
-                    var templateHtml = this.template(this.model);
-                    this.$el.html(templateHtml);
-                    return this;
-                },
-*/
-        events: {
 
+        events: {
+            "mouseover .calendar__day": "dayOver",
+            "mouseout .calendar__day": "dayOut",
+            "click .calendar__day": "dayClick"
+        },
+
+        initialize: function(options){
+            var currentDay = moment().format("YYYY MM DD");
+            if(this.model.get("year") + " " + this.model.get("month") + " " + this.model.get("day") === currentDay){
+                console.log("current day")
+                this.$el.addClass("calendar__day--now");
+            }
         },
 
         onShow: function() {
@@ -24,21 +28,17 @@ define(
             Vent.trigger("firstevent");
         },
 
-        serializeData: function() {
-            var data = {};
-
-            if (this.model) {
-                data = this.model.toJSON();
-            } else if (this.collection) {
-                data = {
-                    items: this.collection.toJSON()
-                };
-            }
-
-            console.log("serializeData", this.cid, this.model)
-            return data;
+        dayOver: function() {
+            this.$el.addClass("calendar__day--over");
         },
 
+        dayOut: function() {
+            this.$el.removeClass("calendar__day--over");
+        },
+
+        dayClick: function() {
+            console.log("click")
+        }
 
     });
 

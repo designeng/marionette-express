@@ -35,7 +35,7 @@ winston.add(winston.transports.File, {
 
 var editorOptions = {
   editor: "Sublime Text 2",
-  openfile: false //open file with editor?
+  openfile: true //open file with editor?
 }
 
 var specOptions = {
@@ -45,7 +45,7 @@ var specOptions = {
   specIndex: "test/SpecIndex.js",
   specTemplate: "templates/spec.js",
   fileExtention: "js",
-  watchFolders: ["views", "ui.components"],
+  watchFolders: ["views", "ui.components"], 
   editor: editorOptions.editor,
   openfile: editorOptions.openfile
 };
@@ -58,7 +58,14 @@ var templateOptions = {
   tplTemplate: "templates/tpl.html",
   tplPathSuffix: "Tpl",
   fileExtention: "js",
-  watchFolders: ["views", "ui.components"],
+  watchFolders: ["views", "ui.components"], //realy needed?
+  editor: editorOptions.editor,
+  openfile: editorOptions.openfile
+};
+
+var addFunctionsOptions = {
+  scriptsBaseDir: "app/scripts",
+  snippetsPath: "templates/snippets",
   editor: editorOptions.editor,
   openfile: editorOptions.openfile
 };
@@ -118,10 +125,11 @@ gaze('log/common.log', function(err, watcher) {
   });
 });
 
-//previosly written grunt tasks in different modules
-var autocreation = require(__dirname + '/lib/tasks/autocreation');
-var makeCssFromHtml = require(__dirname + '/lib/tasks/cssfromhtml');
-var templateForJs = require(__dirname + '/lib/tasks/templateforjs');
+//"grunt tasks" in different modules
+var autocreation = require(__dirname + '/lib/tasks/autocreation'),
+  makeCssFromHtml = require(__dirname + '/lib/tasks/cssfromhtml'),
+  templateForJs = require(__dirname + '/lib/tasks/templateforjs'),
+  addFunctions = require(__dirname + '/lib/tasks/addfunctions');
 
 _.extend(express.directory, {
   //From connect/lib/midleware/directory.js - fixed path to /public directory     
@@ -166,7 +174,8 @@ function html(files, dir, useIcons) {
       disableClass = '',
       toolsTpl = '',
       toolsSpec = '',
-      toolsCss = '';
+      toolsCss = '',
+      toolsFunctions = '';
 
 
     if (useIcons && '..' != file) {
@@ -181,20 +190,18 @@ function html(files, dir, useIcons) {
       //Entities without tools-tpl support (we can't create template for model, controller, router... what else?)
       if (file.match(/model/i) || file.match(/router/i) || file.match(/controller/i)) {
         disableClass = 'disable';
-      } else {
-
       }
-
 
       toolsTpl = '<div class="tools-tpl created ' + disableClass + '" data-file="' + join(dir, file) + '" data-tpl-file="' + file + '"></div>';
       toolsSpec = '<div class="tools-spec created" data-file="' + join(dir, file) + '"></div>';
+      toolsFunctions = '<div class="tools-func" data-file="' + join(dir, file) + '" data-toggle="modal" href="#functions-list"></div>';
     }
 
     if (file.indexOf(".html") > 0) {
       toolsCss = '<div class="tools-css created" data-file="' + join(dir, file) + '"></div>';
     }
 
-    return '<li><a href="' + join(dir, file) + '" class="' + classes.join(' ') + '"' + ' title="' + file + '">' + icon + file + toolsTpl + toolsSpec + toolsCss + '</a></li>';
+    return '<li><a href="' + join(dir, file) + '" class="' + classes.join(' ') + '"' + ' title="' + file + '">' + icon + file + toolsTpl + toolsSpec + toolsFunctions + toolsCss + '</a></li>';
 
   }).join('\n') + '</ul>';
 }
@@ -245,6 +252,7 @@ var icons = {
 
 app.configure(function() {
   var hourMs = 1000 * 60 * 60;
+  app.use(express.bodyParser());
   app.use('/', express.static(__dirname + '/app'));
   app.use('/public', express.static(__dirname + '/public'));
   app.use('/app', express.directory(__dirname + '/app', {
@@ -400,6 +408,33 @@ app.configure(function() {
       });
 
       var result = templateForJs.createTemplate(content, templateOptions, winston);
+
+      res.send(result);
+    });
+  });
+
+  //add functions to .js source
+
+  app.post('/addfunctions', function(req, res) {
+
+    var filepath = req.body.file,
+      functionListToInsert = req.body.functions;
+
+    fs.readFile(__dirname + filepath, function(err, content) {
+
+      if (err) {
+        console.log("ERROR! ", err);
+        return;
+      }
+
+      content = content.toString();
+
+      _.extend(addFunctionsOptions, {
+        relativePath: (filepath.replace("/" + addFunctionsOptions.scriptsBaseDir, "")).substr(0, filepath.lastIndexOf(".")),
+        originPath: filepath
+      });
+
+      var result = addFunctions.insert(content, functionListToInsert, addFunctionsOptions, winston);
 
       res.send(result);
     });

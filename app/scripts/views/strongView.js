@@ -13,11 +13,8 @@ define([
         var strongView = Marionette.ItemView.extend({
                 template: strongViewTpl,
 
-                render: function() {
-                    var renderedTemplate = this.template(this.model);
-                    this.$el.html(renderedTemplate);
-                    return this;
-                },
+
+
 
 
                 test: function() {

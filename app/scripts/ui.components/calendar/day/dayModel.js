@@ -32,9 +32,6 @@ define([
                     this.set({
                         dayOfWeek: options.moment.format("dddd")
                     });
-
-
-                console.log("RES:", this.get("year"), this.get("month"), this.get("day"))
              
             }
         }

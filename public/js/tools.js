@@ -1,3 +1,5 @@
+var currentJsFile; //to pass filepath from .tools-addfunc to modal window save button (fix me without globals!) See at bootstrap-modal.js, delegated new event - savedata
+
 $(document).ready(function() {
 
 	// .json everywhere is returned by express router
@@ -51,14 +53,7 @@ $(document).ready(function() {
 	});
 
 	logReload();
-	/*
-	$.get('/log.json', function(data) {
 
-		$.each(JSON.parse(data), function(key, val) {
-			console.log(key, val);
-		});
-	});
-*/
 	$(".tools-tpl").on("click", function(e) {
 		var filepath = $(this).data('file');
 		$.get(filepath.replace(".js", ".maketpl")).done(function(result) {
@@ -84,6 +79,29 @@ $(document).ready(function() {
 		});
 		$(this).addClass("created");
 		e.preventDefault();
+	});
+
+	$("#add-functions").on("click", function(e) {
+		var checkedFunctions = [];
+		var checkboxes = $("#functions-list").find(':checkbox');
+		for (var i = 0; i < checkboxes.length; i++) {
+			if ($(checkboxes[i]).is(':checked')) {
+				checkedFunctions.push(checkboxes[i].value);
+			}
+		};
+		if (checkedFunctions.length) {
+			$.ajax({
+				url: "/addfunctions",
+				type: "POST",
+				data: {
+					"file": currentJsFile,
+					"functions": checkedFunctions
+				},
+				success: function(data, textStatus, jqXHR) {
+
+				}
+			});
+		}
 	});
 
 	$('#clearlog').on('click', function() {

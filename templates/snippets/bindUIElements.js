@@ -1,0 +1,3 @@
+bindUIElements: function() {
+
+}

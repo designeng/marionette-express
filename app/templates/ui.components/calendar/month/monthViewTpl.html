@@ -1,21 +1,91 @@
 <!-- from github -->
-<div class="month">
+<style>
+.calendar__days-of-week li{
+	display:inline;
+	width: 58px;
+	height: 58px;
+	padding: 10px;
+	/* float: left; */
+	background: white;
+	border-width: 1px 1px 1px 1px;
+	border-style: solid;
+	border-color: #cccccc;
+	display: inline-block;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.calendar__month{
+	width: 406px;
+
+}
+.calendar__days{
+
+}
+.calendar__day{
+	width: 58px;
+	height: 58px;
+	padding: 10px;
+	float: left;
+	background: white;
+	border-width: 1px 1px 1px 1px;
+	border-style: solid;
+	border-color: #cccccc;
+	display: inline-block;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.calendar__day--weekend{
+
+}
+.calendar__day--now{
+	background: url(img/buttons/calendar-now.png) 9px 45px no-repeat;
+}
+.calendar__day{
+	cursor: pointer;
+	color: #fff;
+	background: #008ac5;
+}
+.calendar__day--over{
+	background: #112233 url(img/icons/calendar-over.png) 23px 6px no-repeat;
+}
+.calendar__day-number{
+
+}
+.Monday{
+
+} 
+.Tuesday{
+
+} 
+.Wednesday{
+
+} 
+.Thursday{
+
+} 
+.Friday{
+
+} 
+.Saturday{
+
+} 
+.Sunday{
+
+}
+</style>
+<div class="calendar__month">
 	<header>
 		<h1>{{ monthNumber }} {{ monthName }} {{ year }}</h1>
-		<nav>
-			<span class="prev-month btn btn-warning">Prev</span> <span class="next-month btn btn-warning">Next</span>
-		</nav>
 	</header>
-	<section class="days-of-week">		
-		<div>Monday</div>
-		<div>Tuesday</div>
-		<div>Wednesday</div>
-		<div>Thursday</div>
-		<div>Friday</div>
-		<div>Saturday</div>
-		<div>Sunday</div>
-	</section>
-	<section class="days"></section>
+
+	<div class="calendar__days-of-week"></div>
+
+<!-- test -->
+<div data-subview="monthHeader"></div>
+
+	<div class="calendar__days"></div>
 
 	<div id='month'></div>
 </div>

@@ -51,7 +51,6 @@
     "grunt-plato": "~0.2.0",
     "grunt-contrib-watch": "~0.2.0"
   },
-  "readme": "## Grunt autocreationtests task\n\nin progress",
   "readmeFilename": "README.md",
   "_id": "grunt-autocreationtests@0.0.5",
   "_from": "grunt-autocreationtests@~0.0.5"

@@ -12,8 +12,10 @@ define([
         'use strict';
 
         var testView = Marionette.ItemView.extend({
-
                 template: testViewTpl,
+
+
+
 
                 render: function() {
 

@@ -33,3 +33,11 @@ Handlebars.registerHelper('_decl', function(num, formsJSON) {
 		return forms[2];
 	}
 });
+
+
+/**
+* Helper for data-subview support (vendors/backbone.subviews.js)
+*/
+Handlebars.registerHelper('subview', function( subviewName ) {
+        return "<div data-subview='" + subviewName + "'></div>";
+});

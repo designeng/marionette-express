@@ -14,15 +14,10 @@ define([
         var anotherView = Marionette.ItemView.extend({
                 template: anotherViewTpl,
 
-                render: function() {
-                    var templateParams = _.extend({}, this.model, localizedText),
-                        renderedTemplate = this.template(templateParams);
-                    this.$el.html(renderedTemplate);
-                    return this;
+
+                addFinalizer: function() {
+
                 },
-
-
-
 
 
                 onShow: function() {

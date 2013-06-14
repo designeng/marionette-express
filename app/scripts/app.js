@@ -5,9 +5,9 @@ define([
         'marionette',
         'vent',
         'moment',
-        'ui.components/calendar/month/monthView',
+        'ui.components/calendar/month/monthLayout',
         'ui.components/calendar/day/dayView'
-], function(Backbone, _, Marionette, vent, moment, MonthView, DayView) {
+], function(Backbone, _, Marionette, vent, moment, MonthLayout, DayView) {
     'use strict';
 
     var app = new Marionette.Application();
@@ -60,25 +60,15 @@ define([
             monthNumber: a.format("MM"),
             monthName: a.format("MMMM")
         }
-
+/*
         var monthView = new MonthView({
             model: monthModel
         });
+*/  
+        var monthLayout = new MonthLayout();
 
+        this.content.show(monthLayout);
 
-        this.content.show(monthView);
-
-
-        this.week.show(new DayView({
-            model: {
-                year: 1234,
-                month: 6
-            }
-
-        }));
-
-
-        this.week.close();
     });
 
 
