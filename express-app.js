@@ -33,25 +33,28 @@ winston.add(winston.transports.File, {
 //but for Models specs also con be created
 //TODO: change array name for more apropriate
 
+//make it more clear (TODO)
+var scriptsBaseDir = "app/scripts";
+
 var editorOptions = {
   editor: "Sublime Text 2",
   openfile: true //open file with editor?
 }
 
 var specOptions = {
-  scriptsBaseDir: "app/scripts",
+  scriptsBaseDir: scriptsBaseDir,
   specBaseDir: "test/spec",
   specPrefix: "spec",
   specIndex: "test/SpecIndex.js",
   specTemplate: "templates/spec.js",
   fileExtention: "js",
-  watchFolders: ["views", "ui.components"], 
+  watchFolders: ["views", "ui.components"],
   editor: editorOptions.editor,
   openfile: editorOptions.openfile
 };
 
 var templateOptions = {
-  scriptsBaseDir: "app/scripts",
+  scriptsBaseDir: scriptsBaseDir,
   tplBaseDir: "app/templates",
   appPrefix: "app/", //to delete from beginning for inserting path-line in define
   specIndex: "test/SpecIndex.js",
@@ -64,7 +67,7 @@ var templateOptions = {
 };
 
 var addFunctionsOptions = {
-  scriptsBaseDir: "app/scripts",
+  scriptsBaseDir: scriptsBaseDir,
   snippetsPath: "templates/snippets",
   editor: editorOptions.editor,
   openfile: editorOptions.openfile
@@ -73,6 +76,7 @@ var addFunctionsOptions = {
 var cssOptions = {
   templateDir: "app/templates",
   stylesBaseDir: "app/styles/less", //here must be saved created .css with the same path structure as the source html-template file 
+  destFileExtention: "less",
   editor: editorOptions.editor,
   openfile: editorOptions.openfile
 }
@@ -124,6 +128,9 @@ gaze('log/common.log', function(err, watcher) {
     watchSocket.emit('logchanged');
   });
 });
+
+//router - move all tasks in special directories! (TODO)
+var appRouter = require(__dirname + '/lib/router');
 
 //"grunt tasks" in different modules
 var autocreation = require(__dirname + '/lib/tasks/autocreation'),
@@ -439,6 +446,8 @@ app.configure(function() {
       res.send(result);
     });
   });
+
+  app.post('/createlayout', appRouter.createLayout);
 
   //find already created specs
   app.get('/specs.json', function(req, res) {
