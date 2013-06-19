@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>listing directory {directory}</title>
+    <title></title>
     <style>{style}</style>
     <link href="http://twitter.github.io/bootstrap/assets/css/bootstrap.css" rel="stylesheet" />
     <link href="http://twitter.github.io/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet" />
@@ -63,7 +63,14 @@
         });
       }
 
+
+      if(!window.em){
+        var em = {directory: '{directory}'};
+        document.title = "listing directory " + em.directory;
+      }
+
       $(window).on('content loaded', function(){
+        //$('.linkedPath').html(em.linkedPath);
         $('search').on('keyup', search);
       });
     </script>
@@ -82,7 +89,8 @@
     <input id="clearlog" type="button" value="Clear log"  />
     <input id="search" type="text" placeholder="Search" autocomplete="off" />
     <div id="wrapper">
-      <h1>{linked-path}</h1>
+      <h1 class="linkedPath">{linked-path}</h1>
+      <div class="create-layout" href="#layout-creation" data-toggle="modal">createLayout</div>
       {files}
     </div>
 
@@ -98,13 +106,14 @@
     <script type="text/javascript" src="http://twitter.github.io/bootstrap/assets/js/bootstrap.js"></script>
     <script type="text/javascript" src="/public/js/bootstrap-modalmanager.js"></script>
     <script type="text/javascript" src="/public/js/bootstrap-modal.js"></script>
+    <script type="text/javascript" src="/public/js/jquery-addable.js"></script>
 
     <script>
       var socket = io.connect('http://localhost:{port}');
 
 socket.on('added', function(data) {
   console.log("SOCET", data);
-  //window.location.reload();
+  window.location.reload();
 });
 socket.on('deleted', function(data) {
   console.log(data);
@@ -116,7 +125,7 @@ socket.on('logchanged', function(data) {
 });
     </script>
 
-
+<!-- Modal with functions list -->
 
 <div id="functions-list" class="modal hide fade" tabindex="-1" data-width="760">
   <div class="modal-header">
@@ -149,6 +158,42 @@ socket.on('logchanged', function(data) {
   </div>
 </div>
 
+<!-- Modal with layout creation form -->
+
+<div id="layout-creation" class="modal hide fade" tabindex="-1" data-width="760">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+    <h3>Create Layout</h3>
+  </div>
+  <div class="modal-body">
+    <div class="row-fluid">
+      <div class="span6">
+        <p>
+          <form id="layout-creation-form">
+            <input type="input" class="span12 layout-data" value="" name="layoutName">
+            <label for "layoutName">layout name</label>
+
+            <div class="template_element">
+                <label for="region-input"></label>
+                <input type="text" name="region-input" class="layout-region-data"/>
+                <a href="#" class="remove">Remove</a>
+            </div>
+
+            <a href="#" class="add_field">Add Region</a>
+
+            <script type="text/javascript">
+              $('#layout-creation-form .add_field').adds('#layout-creation-form .template_element');
+            </script>
+          </form>
+        </p>        
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn">Close</button>
+    <button type="button" class="btn btn-primary" id="create-layout-control" data-savedata="modal">Save</button>
+  </div>
+</div>
 
    
 

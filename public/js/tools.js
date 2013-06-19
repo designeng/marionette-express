@@ -104,6 +104,56 @@ $(document).ready(function() {
 		}
 	});
 
+	$("#create-layout-control").on('click', function() {
+		var regions = [];
+		var resObj = {};
+
+		var regionsIn = $("#layout-creation").find(':input.layout-region-data');
+
+		if (regionsIn.length) {
+			for (var i = 0; i < regionsIn.length; i++) {
+				var val = $(regionsIn[i]).val();
+
+				if (typeof val != undefined && val !== "") {
+					regions.push(val);
+				}
+			};
+		} else{
+			regions.push("yourValue");
+		}
+
+		var inputValues = $("#layout-creation").find(':input.layout-data');
+
+		for (var i = 0; i < inputValues.length; i++) {
+			var val = $(inputValues[i]).val(),
+				name = $(inputValues[i]).attr("name");
+
+			if (typeof val != undefined && val !== "") {
+				console.log(name, val)
+				resObj[name] = val;
+			} else {
+				console.log("Field " + name + " is empty!");
+				return;
+			}
+		};
+
+		$.ajax({
+			url: "/createlayout",
+			type: "POST",
+			data: {
+				"dir": em.directory,
+				"layoutName": resObj.layoutName,
+				"regions": regions
+			},
+			success: function(data, textStatus, jqXHR) {
+				console.log(data)
+			},
+			error: function(err) {
+				console.log(err)
+			}
+		});
+	});
+
 	$('#clearlog').on('click', function() {
 		$.post('/log/clear', {
 			_method: 'delete'

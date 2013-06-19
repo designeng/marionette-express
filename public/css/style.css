@@ -252,3 +252,9 @@ ul#log-wrapper li {
       position: absolute;
       left: 270px;
     }
+
+
+/* create-layout */
+.create-layout{
+  cursor: pointer
+}
