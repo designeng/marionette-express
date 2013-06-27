@@ -9,31 +9,42 @@ define(
 
         template: dayViewTpl,
 
+        tagName: "a",
+
+        className: "calendar__day",
+
+
         events: {
-            "mouseover .calendar__day": "dayOver",
-            "mouseout .calendar__day": "dayOut",
             "click .calendar__day": "dayClick"
         },
 
-        initialize: function(options){
+        initialize: function(options) {
             var currentDay = moment().format("YYYY MM DD");
-            if(this.model.get("year") + " " + this.model.get("month") + " " + this.model.get("day") === currentDay){
-                console.log("current day")
+            var dayStr = this.model.get("year") + " " + this.model.get("month") + " " + this.model.get("day");
+            var isAfterCurrent = moment(dayStr).isAfter(currentDay);
+
+            //add state "now"
+            if (dayStr === currentDay) {
                 this.$el.addClass("calendar__day--now");
             }
+
+            //add state "actual" (intersects with "now" state)
+            if (dayStr === currentDay || isAfterCurrent) {
+                this.$el.addClass("calendar__day--actual");
+
+                //add state "weekend"
+                if (this.model.get("isWeekend")) {
+                    this.$el.addClass("calendar__day--weekend");
+                }
+            }
+
+            this.on("search:flexible", this.onFlexibleSearch, this);
+
+
         },
 
-        onShow: function() {
-            console.log("DayView onShow");
-            Vent.trigger("firstevent");
-        },
-
-        dayOver: function() {
-            this.$el.addClass("calendar__day--over");
-        },
-
-        dayOut: function() {
-            this.$el.removeClass("calendar__day--over");
+        onFlexibleSearch: function(){
+            console.log("onFlexibleSearch")
         },
 
         dayClick: function() {

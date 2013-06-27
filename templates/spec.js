@@ -1,21 +1,29 @@
-define(["<%= path %>"], function(<%= name %>) {
-  	describe("<%= specDescription %>", function () {
+define(
+	{{ _safeString defineArea }}
+	, function(
+		{{ _toParamsColumn requireJsModuleParams }}
+	) {	
+
+	var {{ _toUpperFirstChar name }} = require(["{{ path }}"]);
+
+  	describe("{{ specDescription }}", function () {
   	
-  		var t = new <%= name %>();
-
-/* Expectations:
-
-<%= expectations %>
-*/
+  		var {{ _toLowerFirstChar name }} = new {{ _toUpperFirstChar name }}();
 
 
-    	describe('your_description', function () {
-      		it('your_text', function () {
-        
+    	describe('{{ _toLowerFirstChar name }}', function () {
+
+      		it('is defined', function () {
+        		 expect({{ _toLowerFirstChar name }}).toBeDefined();
+      		});
 
 
-      	});
+
     });
 
   });
 });
+
+/* Some possible expectations:
+{{ expectations }}
+*/

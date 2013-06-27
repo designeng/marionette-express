@@ -5,31 +5,53 @@ define([
         'marionette',
         'vent',
         'moment',
-        'ui.components/calendar/month/monthLayout',
-        'ui.components/calendar/day/dayView'
-], function(Backbone, _, Marionette, vent, moment, MonthLayout, DayView) {
+        'i18n!nls/general',
+
+        'ui.components/calendar/calendarModule'
+
+], function(Backbone,
+    _,
+    Marionette,
+    vent,
+    moment,
+    localized,
+    calendarModule) {
     'use strict';
 
     var app = new Marionette.Application();
 
-    var test = function() {
-        return "123";
-    }
-
-    app.test = test;
-
-
     // these regions correspond to #ID's in the index.html 
     app.addRegions({
-        content: "#content",
-        menu: "#menu",
-        week: "#week"
+        calendarModuleWrapper: "#calendarModuleWrapper"
     });
 
     // marionette app events...
     app.on("initialize:after", function() {
         console.log('initialize:after');
         Backbone.history.start();
+    });
+
+    app.addInitializer(function() {
+        /**
+         * Helper for i18n support for Handlebars
+         */
+        Handlebars.registerHelper('_', function(text) {
+            if (arguments.length > 2) {
+                console.log("Handlebars.registerHelper ARGS > 2")
+                var str = arguments[0],
+                    params = _.toArray(arguments).slice(1, -1),
+                    param;
+                while (str.indexOf("%s") != -1) {
+                    param = params.length == 1 ? params[0] : params.shift();
+                    str = str.replace(/%s/, param);
+                }
+                text = str;
+            } else {
+                //Get string from lang config
+                text = localized[text];
+            }
+            return text;
+        });
     });
 
 
@@ -54,24 +76,15 @@ define([
     });
 
     app.addInitializer(function() {
-        var a = moment();
-        var monthModel = {
-            year: a.format("YYYY"),
-            monthNumber: a.format("MM"),
-            monthName: a.format("MMMM")
-        }
-/*
-        var monthView = new MonthView({
-            model: monthModel
+        vent.on("someEvent", function() {
+            console.log("someEvent init 123");
         });
-*/  
-        var monthLayout = new MonthLayout();
-
-        this.content.show(monthLayout);
-
     });
 
+    app.addInitializer(function(){
+        calendarModule.start();
+        calendarModule.someFunction();
+    })
 
-    // export the app
     return app;
 });

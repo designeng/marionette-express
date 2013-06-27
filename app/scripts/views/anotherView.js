@@ -1,35 +1,14 @@
-/* @CreateTests */
 define([
-        'backbone',
         'underscore',
         'marionette',
-        'Handlebars',
-        'vent',
-        'i18n!nls/general',
-        'hbars!templates/views/anotherViewTpl'
-    ], function(Backbone, _, Marionette, Handlebars, vent, localizedText, anotherViewTpl) {
+        'vent'
+    ], function(_, Marionette, vent) {
 
         'use strict';
 
-        var anotherView = Marionette.ItemView.extend({
-                template: anotherViewTpl,
+        var another = Marionette.ItemView.extend({
 
-
-                addFinalizer: function() {
-
-                },
-
-
-                onShow: function() {
-
-                    console.log("onShow")
-
-                    return this;
-                }
             });
 
-
-
-
-        return anotherView;
+        return another;
     });

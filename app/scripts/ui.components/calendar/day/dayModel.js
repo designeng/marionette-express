@@ -13,6 +13,7 @@ define([
             month: 1,
             day: 1,
             dayOfWeek: "",
+            isWeekend: false,
             moment: moment("2013 1 1") // object of Moment.js
         },
 
@@ -32,6 +33,9 @@ define([
                     this.set({
                         dayOfWeek: options.moment.format("dddd")
                     });
+                    if(this.get("dayOfWeek") == "Saturday" || this.get("dayOfWeek") == "Sunday"){
+                        this.set({isWeekend: true}); 
+                    }
              
             }
         }

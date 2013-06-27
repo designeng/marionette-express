@@ -1,22 +1,33 @@
-define(["views/experimentalView"], function(experimentalView) {
-  	describe("views::experimentalView", function () {
-  	
-  		var t = new experimentalView();
+define([
+        "views/experimentalView"
+    ], function(
+        Backbone,
+        _,
+        Marionette,
+        Handlebars,
+        Vent,
+        Localized,
+        ExperimentalViewTpl,
 
-/* Expectations:
+        experimentalView) {
+        describe("views::experimentalView", function() {
+
+            var t = new experimentalView();
+
+            /* Expectations:
 
 		expect(t.onShow).
 
 */
 
 
-    	describe('your_description', function () {
-      		it('your_text', function () {
-        
+            describe('your_description', function() {
+                it('your_text', function() {
 
 
-      	});
+
+                });
+            });
+
+        });
     });
-
-  });
-});

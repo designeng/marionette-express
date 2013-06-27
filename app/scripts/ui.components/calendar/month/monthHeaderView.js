@@ -6,7 +6,7 @@ define([
 		'vent',
 		'i18n!nls/general',
 		'hbars!templates/ui.components/calendar/month/monthHeaderTpl'
-], function(Backbone, _, Marionette, Handlebars, vent, localizedText, monthHeaderTpl) {
+], function(Backbone, _, Marionette, Handlebars, vent, localized, monthHeaderTpl) {
 
 	'use strict';
 
@@ -14,8 +14,9 @@ define([
 		template: monthHeaderTpl,
 		templateParams: null,
 
-		//console.log(localizedText.loc_moment_weekdaysShort)
+		//console.log(localized.loc_moment_weekdaysShort)
 
+		/* here weekday names are passed directly, with extending - but we can use handlebars _ helper */
 		initialize: function() {
 			var daysOfWeekShorhEn = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 			var weekHeader = {};
@@ -23,7 +24,7 @@ define([
 			for (var i = 0; i < daysOfWeekShorhEn.length; i++) {
 				prop = daysOfWeekShorhEn[i];
 				if (!weekHeader.hasOwnProperty(prop)) {
-					weekHeader[prop] = localizedText.loc_moment_weekdaysShort[i];
+					weekHeader[prop] = localized.loc_moment_weekdaysShort[i];
 				}
 			};
 

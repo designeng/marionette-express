@@ -4,6 +4,7 @@ var express = require('express'),
   path = require('path'),
   colors = require('colors'),
   gaze = require('gaze'),
+  atImport = require(__dirname + '/lib/tasks/utils/at-import'),
   extname = path.extname,
   join = path.join,
   app = express.createServer(),
@@ -96,6 +97,11 @@ gaze(['app/scripts/*.js',
   // On file changed
   this.on('changed', function(filepath) {
     console.log(filepath + ' was changed');
+
+    //watch for changes in main.js require config 
+    if(filepath.indexOf("app/scripts/main.js") != -1){
+        console.log(filepath + ' CHANGED!');
+    }
   });
 
   // On file added
@@ -133,7 +139,7 @@ gaze('log/common.log', function(err, watcher) {
 var appRouter = require(__dirname + '/lib/router');
 
 //"grunt tasks" in different modules
-var autocreation = require(__dirname + '/lib/tasks/autocreation'),
+var autospecs = require(__dirname + '/lib/tasks/autospecs'),
   makeCssFromHtml = require(__dirname + '/lib/tasks/cssfromhtml'),
   templateForJs = require(__dirname + '/lib/tasks/templateforjs'),
   addFunctions = require(__dirname + '/lib/tasks/addfunctions');
@@ -340,7 +346,7 @@ app.configure(function() {
 
   });
 
-  //Autocreation tests suite for test-driven development
+  //autospecs: create specs suite for test-driven development
 
   app.get('/*/*.tdd', function(req, res) {
     var str = req.url;
@@ -359,7 +365,7 @@ app.configure(function() {
         originPath: str,
       });
 
-      var result = autocreation.createTests(content, specOptions, winston);
+      var result = autospecs.createTests(content, specOptions, winston);
 
       res.send(result);
     });
@@ -448,6 +454,8 @@ app.configure(function() {
   });
 
   app.post('/createlayout', appRouter.createLayout);
+
+  //app.post('/createbemstyles', appRouter.createBemStyles);
 
   //find already created specs
   app.get('/specs.json', function(req, res) {

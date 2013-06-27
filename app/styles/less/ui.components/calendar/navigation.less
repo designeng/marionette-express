@@ -1,0 +1,30 @@
+
+@panelWidth: 600px;
+
+@arrow__item_width: 50px;
+@arrow__item_height: 50px;
+
+.arrowsLayout{
+	width: @panelWidth;
+	position: absolute;
+	z-index: 10;
+}
+
+.arrowsLayout__item{
+	width: @arrow__item_width;
+	height: @arrow__item_height;
+	cursor: pointer;
+	position: absolute;
+}
+
+.arrowsLayout__arrow--back{	
+	background: url(../../img/mock/arrowBack.png) no-repeat;
+	left: 0px;
+}
+.arrowsLayout__arrow--forward{
+	background: url(../../img/mock/arrowForward.png) no-repeat;
+	right: 0px;
+}
+.arrowsLayout__arrow--disable{
+	
+}

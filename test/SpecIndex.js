@@ -1,30 +1,30 @@
 define(function() {
   return {
     specs: [
-    	//"spec/models/todo_spec.js"
-      	//,"spec/collections/col_spec.js"
-      	//,"spec/app/app.js"
-
-
-
-
-
-		,"spec/views/anotherView.js"
-		,"spec/views/nextView.js"
-		,"spec/views/makeView.js"
-		,"spec/views/strongView.js"
-		,"spec/collections/todocollection.js"
-		,"spec/views/extendedTemplateParamsView.js"
-		,"spec/views/superView.js"
-		,"spec/views/testView.js"
+    	"spec/ui.components/calendar/month/monthBodyView.js"
 		,"spec/ui.components/calendar/day/dayView.js"
-		,"spec/ui.components/calendar/day/dayModel.js"
-		,"spec/views/experimentalView.js"
-		,"spec/ui.components/calendar/day/dayController.js"
-		,"spec/vent.js"
+		//,"spec/ui.components/calendar/day/dayModel.js"
+		,"spec/ui.components/calendar/flightPanel/flightPanelLayout.js"
+		,"spec/ui.components/calendar/flightPanel/flightSetView.js"
+		,"spec/ui.components/calendar/flightPanel/destinationArrivalView.js"		
+		,"spec/ui.components/calendar/month/monthLayout.js"
     ]
   };
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

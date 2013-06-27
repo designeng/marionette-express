@@ -1,4 +1,303 @@
-#header h1{font-size:26px;font-weight:bold;}
-#header p{font-size:200px;}#header p a{text-decoration:none;}#header p a:hover{border-width:1px;}
-#menu a{color:#234;border-top:dotted 1px black;border-bottom:solid 2px black;}
-.post a{color:red;border-top:dotted 1px black;border-bottom:solid 2px black;}
+/* resets */
+/* 
+html5doctor.com Reset Stylesheet
+v1.6.1
+Last Updated: 2010-09-17
+Author: Richard Clark - http://richclarkdesign.com 
+Twitter: @rich_clark
+*/
+html,
+body,
+div,
+span,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+abbr,
+address,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+samp,
+small,
+strong,
+sub,
+sup,
+var,
+b,
+i,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+}
+body {
+  line-height: 1;
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+nav ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+a {
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+}
+/* change colours to suit your needs */
+ins {
+  background-color: #ff9;
+  color: #000;
+  text-decoration: none;
+}
+/* change colours to suit your needs */
+mark {
+  background-color: #ff9;
+  color: #000;
+  font-style: italic;
+  font-weight: bold;
+}
+del {
+  text-decoration: line-through;
+}
+abbr[title],
+dfn[title] {
+  border-bottom: 1px dotted;
+  cursor: help;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+/* change border colour to suit your needs */
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #cccccc;
+  margin: 1em 0;
+  padding: 0;
+}
+input,
+select {
+  vertical-align: middle;
+}
+/* overload chrom defaults */
+ul,
+menu,
+dir {
+  display: block;
+  list-style-type: disc;
+  -webkit-margin-before: 1em;
+  -webkit-margin-after: 1em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  -webkit-padding-start: 0px;
+}
+/* from krabby - to be edited and (or) deleted (it's here while we develope) */
+body,
+td,
+pre,
+input,
+select,
+textarea {
+  font: normal 11px Tahoma, Helvetica, Arial, sans-serif;
+}
+/* calendar component */
+.arrowsLayout {
+  width: 600px;
+  position: absolute;
+  z-index: 10;
+}
+.arrowsLayout__item {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  position: absolute;
+}
+.arrowsLayout__arrow--back {
+  background: url(../../img/mock/arrowBack.png) no-repeat;
+  left: 0px;
+}
+.arrowsLayout__arrow--forward {
+  background: url(../../img/mock/arrowForward.png) no-repeat;
+  right: 0px;
+}
+#calendarRangeWrapper {
+  position: relative;
+  left: 20px;
+}
+.calendar__monthRangeLayout__item {
+  position: absolute;
+  left: 20px;
+}
+.monthRow {
+  position: relative;
+}
+.monthLayout {
+  position: absolute;
+}
+.calendar__daysOfWeek li {
+  display: inline;
+  width: 58px;
+  height: 58px;
+  /* float: left; */
+
+  background: white;
+  border-width: 1px 1px 1px 1px;
+  border-style: solid;
+  border-color: #cccccc;
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.calendar__month {
+  width: 406px;
+}
+.calendar__day {
+  width: 58px;
+  height: 58px;
+  float: left;
+  font-size: 24px;
+  border-width: 1px 1px 1px 1px;
+  border-style: solid;
+  border-color: #cccccc;
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.calendar__day {
+  cursor: default;
+  color: #02577b;
+  background: #008ac5;
+}
+a.calendar__day--actual {
+  color: #fff;
+  cursor: pointer;
+}
+a.calendar__day--actual:hover {
+  background: url(../../img/icons/calendar-over.png) 23px 6px no-repeat #0063b3;
+}
+.calendar__day--now {
+  background: url(../../img/buttons/calendar-now.png) 9px 45px no-repeat #008ac5;
+}
+.calendar__day--weekend span {
+  color: #f3acb4;
+}
+.calendar__day--over {
+  background: #112233 url(img/icons/calendar-over.png) 23px 6px no-repeat;
+}
+.calendar__dayNumber {
+  font-size: 24px;
+  margin: 0 auto;
+  width: 100%;
+}
+.search-options__item {
+  float: left;
+  display: inline-block;
+  background: #008ac5;
+}
+.flexible-search__header,
+.transplant__header,
+.passengers__header,
+.passengerclass__header {
+  color: white;
+  padding: 0px;
+  margin: 0;
+  font-size: 14px;
+}
+.search-options__search-btn {
+  border: 0px;
+  border-radius: 2px;
+  box-shadow: 0px 2px 6px #666;
+  background: #ffd305;
+  vertical-align: bottom;
+  padding: 1px 18px 2px 18px;
+  height: 35px;
+  color: #693d00;
+  font-size: 12px;
+  font-family: Tahoma, Helvetica, Arial, sans-serif;
+  text-align: center;
+  cursor: pointer;
+  overflow: visible;
+  display: block;
+  line-height: 12px !important;
+}

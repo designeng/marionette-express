@@ -1,21 +1,33 @@
-define(["ui.components/calendar/day/dayModel"], function(dayModel) {
-  	describe("ui.components::calendar::day::dayModel", function () {
-  	
-  		var t = new dayModel();
+define(
+    [
+        "backbone",
+        "vent",
+        "moment",
+        "ui.components/calendar/day/dayModel"
+    ], function(
+        Backbone,
+        Vent,
+        Moment,
+        DayModel) {
 
-/* Expectations:
+        describe("ui.components/calendar/day/dayModel", function() {
+
+            var dayModel = new DayModel();
+
+            describe('dayModel', function() {
+
+                it('is defined', function() {
+                    expect(dayModel).toBeDefined();
+                });
 
 
-*/
 
+            });
 
-    	describe('your_description', function () {
-      		it('your_text', function () {
-        
-
-
-      	});
+        });
     });
 
-  });
-});
+/* Some possible expectations:
+expect(t.initialize).
+
+*/

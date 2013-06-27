@@ -1,19 +1,22 @@
 require.config({
-  baseUrl: "/app/scripts",
-  urlArgs: 'cb=' + Math.random(),
-  paths: {
+    baseUrl: '/app/scripts',
+    urlArgs: 'cb=' + Math.random(),
+    paths: {        
         jquery: 'vendors/jquery.min',  // amd version
         underscore: 'vendors/underscore', // amd version
         backbone: 'vendors/backbone', // amd version        
         'backbone.eventbinder': 'vendors/backbone.eventbinder', // amd version
         'backbone.babysitter': 'vendors/backbone.babysitter', // amd version
+        subviews: 'vendors/backbone.subviews',
         marionette: 'vendors/backbone.marionette',  // amd version
         'backbone.wreqr': 'vendors/backbone.wreqr', // amd version
         Handlebars: 'vendors/handlebars',
         text: 'vendors/requirejs-text/text',
         hbars: 'vendors/hbars',
         tpl: 'vendors/tpl',
-        templates: '../templates',       
+        moment: "vendors/moment",
+        interval: "vendors/moment-interval",
+        templates: '../templates', //it shoud be so! hbars plugin will read all templates inside     
         'handlebars.helpers': 'helpers/handlebars.helpers',
         i18n: 'vendors/i18n'
     },

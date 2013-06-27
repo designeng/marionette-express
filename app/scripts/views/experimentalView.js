@@ -7,7 +7,7 @@ define([
         'vent',
         'i18n!nls/general',
         'hbars!templates/views/experimentalViewTpl'
-    ], function(Backbone, _, Marionette, Handlebars, vent, localizedText, experimentalViewTpl) {
+    ], function(Backbone, _, Marionette, Handlebars, vent, localized, experimentalViewTpl) {
 
         'use strict';
 

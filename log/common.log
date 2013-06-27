@@ -1,11 +1,51 @@
-{"level":"info","message":"Template file for /app/scripts/views/strongView.js was created and path inserted into define area","timestamp":"2013-06-14T15:14:09.703Z"}
-{"level":"warn","message":"Path to template already exists in define array in  ./app/scripts/views/strongView.js view","timestamp":"2013-06-14T15:14:09.705Z"}
-{"level":"info","message":"Template file for /app/scripts/views/strongView.js was created and path inserted into define area","timestamp":"2013-06-14T15:14:43.301Z"}
-{"level":"info","message":"Template file for /app/scripts/views/superView.js was created and path inserted into define area","timestamp":"2013-06-14T15:15:15.603Z"}
-{"level":"warn","message":"Path to template already exists in define array in  ./app/scripts/views/superView.js view","timestamp":"2013-06-14T15:15:15.603Z"}
-{"level":"info","message":"Template file for /app/scripts/views/testView.js was created and path inserted into define area","timestamp":"2013-06-14T15:15:29.065Z"}
-{"level":"warn","message":"Path to template already exists in define array in  ./app/scripts/views/testView.js view","timestamp":"2013-06-14T15:15:29.065Z"}
-{"level":"info","message":"Spec file for /app/scripts/views/testView.js was created","timestamp":"2013-06-14T15:16:22.575Z"}
-{"level":"info","message":"Template file for /app/scripts/views/testView.js was created and path inserted into define area","timestamp":"2013-06-14T15:16:31.178Z"}
-{"level":"info","message":"Template file for /app/scripts/views/testView.js was created and path inserted into define area","timestamp":"2013-06-14T15:16:42.736Z"}
-{"level":"warn","message":"Path to template already exists in define array in  ./app/scripts/views/testView.js view","timestamp":"2013-06-14T15:16:42.738Z"}
+{"level":"info","message":"Spec file for /app/scripts/views/extendedTemplateParamsView.js was created","timestamp":"2013-06-20T19:10:59.401Z"}
+{"level":"error","message":"Spec file is not created! Check your /app/scripts/views/extraNewLayout.js file for errors!","timestamp":"2013-06-20T19:11:04.790Z"}
+{"level":"info","message":"Spec file for /app/scripts/views/experimentalView.js was created","timestamp":"2013-06-20T19:11:12.073Z"}
+{"level":"info","message":"Spec file for /app/scripts/views/extendedTemplateParamsView.js was created","timestamp":"2013-06-20T19:12:35.195Z"}
+{"level":"info","message":"Spec file for /app/scripts/views/extendedTemplateParamsView.js was created","timestamp":"2013-06-20T19:13:55.130Z"}
+{"level":"info","message":"Spec file for /app/scripts/views/extendedTemplateParamsView.js was created","timestamp":"2013-06-20T19:16:05.556Z"}
+{"level":"info","message":"Spec file for /app/scripts/views/extendedTemplateParamsView.js was created","timestamp":"2013-06-20T19:17:19.200Z"}
+{"level":"info","message":"Spec file for /app/scripts/views/extendedTemplateParamsView.js was created","timestamp":"2013-06-20T19:38:17.470Z"}
+{"level":"info","message":"Spec file for /app/scripts/views/extendedTemplateParamsView.js was created","timestamp":"2013-06-20T19:39:29.954Z"}
+{"level":"info","message":"Spec file for /app/scripts/views/extendedTemplateParamsView.js was created","timestamp":"2013-06-20T19:42:39.178Z"}
+{"level":"info","message":"Spec file for /app/scripts/views/extendedTemplateParamsView.js was created","timestamp":"2013-06-20T19:49:58.823Z"}
+{"level":"info","message":"Spec file for /app/scripts/views/extendedTemplateParamsView.js was created","timestamp":"2013-06-20T19:51:13.818Z"}
+{"level":"info","message":"Spec file for /app/scripts/views/extendedTemplateParamsView.js was created","timestamp":"2013-06-20T20:01:15.320Z"}
+{"level":"info","message":"Spec file for /app/scripts/views/extendedTemplateParamsView.js was created","timestamp":"2013-06-20T20:01:15.470Z"}
+{"level":"info","message":"Spec file for /app/scripts/views/extendedTemplateParamsView.js was created","timestamp":"2013-06-20T20:04:17.979Z"}
+{"level":"error","message":"Spec file is not created! Check your /app/scripts/views/extraNewLayout.js file for errors!","timestamp":"2013-06-20T20:05:16.632Z"}
+{"level":"info","message":"Spec file for /app/scripts/views/extendedTemplateParamsView.js was created","timestamp":"2013-06-20T20:05:26.279Z"}
+{"level":"info","message":"Spec file for /app/scripts/views/extendedTemplateParamsView.js was created","timestamp":"2013-06-20T20:05:53.486Z"}
+{"level":"warn","message":"/test/spec/ui.components/calendar/searchOptions/flexibleSearchView.js was deleted","timestamp":"2013-06-20T20:07:16.659Z"}
+{"level":"warn","message":"/test/spec/ui.components/calendar/searchOptions/passengerClassView.js was deleted","timestamp":"2013-06-20T20:07:16.659Z"}
+{"level":"warn","message":"/test/spec/ui.components/calendar/searchOptions/passengersView.js was deleted","timestamp":"2013-06-20T20:07:16.660Z"}
+{"level":"warn","message":"/test/spec/ui.components/calendar/flightPanel/flightPanelLayout.js was deleted","timestamp":"2013-06-20T20:07:20.514Z"}
+{"level":"info","message":"Spec file for /app/scripts/ui.components/calendar/flightPanel/flightPanelLayout.js was created","timestamp":"2013-06-20T20:07:37.990Z"}
+{"level":"info","message":"Spec file for /app/scripts/ui.components/calendar/flightPanel/flightPanelLayout.js was created","timestamp":"2013-06-20T20:12:14.432Z"}
+{"level":"info","message":"Spec file for /app/scripts/ui.components/calendar/flightPanel/flightSetView.js was created","timestamp":"2013-06-20T20:13:45.693Z"}
+{"level":"info","message":"Spec file for /app/scripts/ui.components/calendar/flightPanel/flightSetView.js was created","timestamp":"2013-06-20T20:14:52.270Z"}
+{"level":"info","message":"Spec file for /app/scripts/ui.components/calendar/flightPanel/flightSetView.js was created","timestamp":"2013-06-20T20:16:06.427Z"}
+{"level":"info","message":"Spec file for /app/scripts/ui.components/calendar/flightPanel/flightPanelLayout.js was created","timestamp":"2013-06-20T20:16:42.791Z"}
+{"level":"info","message":"Spec file for /app/scripts/ui.components/calendar/flightPanel/destinationArrivalView.js was created","timestamp":"2013-06-21T11:14:26.944Z"}
+{"level":"info","message":"Spec file for /app/scripts/ui.components/calendar/flightPanel/flightPanelLayout.js was created","timestamp":"2013-06-21T11:20:51.693Z"}
+{"level":"info","message":"Created entity: app/scripts/views/superLTLayout.js","timestamp":"2013-06-21T14:28:42.640Z"}
+{"level":"info","message":"Created entity: app/scripts/views/difficultView.js","timestamp":"2013-06-21T14:28:42.641Z"}
+{"level":"info","message":"Created entity: app/scripts/views/simpleView.js","timestamp":"2013-06-21T14:28:42.641Z"}
+{"level":"info","message":"Template file for /app/scripts/ui.components/calendar/navigation/arrowsLayout.js was created and path inserted into define area","timestamp":"2013-06-21T18:04:34.414Z"}
+{"level":"info","message":"Created entity: app/scripts/ui.components/calendar/month/yourValueView.js","timestamp":"2013-06-21T19:06:08.514Z"}
+{"level":"info","message":"Created entity: app/scripts/ui.components/calendar/month/MonthRangeLayoutLayout.js","timestamp":"2013-06-21T19:06:08.532Z"}
+{"level":"warn","message":"/app/scripts/ui.components/calendar/month/yourValueView.js was deleted","timestamp":"2013-06-21T19:06:39.575Z"}
+{"level":"warn","message":"/app/scripts/ui.components/calendar/month/MonthRangeLayoutLayout.js was deleted","timestamp":"2013-06-21T19:07:43.439Z"}
+{"level":"warn","message":"/app/scripts/ui.components/calendar/month/monthRangeLayoutLayout.js was deleted","timestamp":"2013-06-21T19:08:04.899Z"}
+{"level":"warn","message":"/app/scripts/ui.components/calendar/month/monthRangeLayoutLayout.js was deleted","timestamp":"2013-06-21T19:08:47.971Z"}
+{"level":"info","message":"Template file for /app/scripts/ui.components/calendar/month/monthRangeLayout.js was created and path inserted into define area","timestamp":"2013-06-21T19:08:52.083Z"}
+{"level":"info","message":"Spec file for /app/scripts/ui.components/calendar/month/monthLayout.js was created","timestamp":"2013-06-24T14:43:13.180Z"}
+{"level":"info","message":"Spec file for /app/scripts/ui.components/calendar/month/monthBodyView.js was created","timestamp":"2013-06-24T17:50:33.367Z"}
+{"level":"info","message":"Created entity: app/scripts/views/someOneView.js","timestamp":"2013-06-25T14:32:34.275Z"}
+{"level":"info","message":"Created entity: app/scripts/views/someCoolLTLayout.js","timestamp":"2013-06-25T14:32:34.291Z"}
+{"level":"info","message":"Spec file for /app/scripts/ui.components/calendar/day/dayModel.js was created","timestamp":"2013-06-25T15:25:37.797Z"}
+{"level":"info","message":"Spec file for /app/scripts/ui.components/calendar/day/dayView.js was created","timestamp":"2013-06-25T15:26:10.466Z"}
+{"level":"info","message":"Template file for /app/scripts/ui.components/calendar/month/monthRowCollectionView.js was created and path inserted into define area","timestamp":"2013-06-25T19:47:16.331Z"}
+{"level":"warn","message":"/app/scripts/ui.components/calendar/month/monthRowView.js was deleted","timestamp":"2013-06-26T11:58:40.846Z"}
+{"level":"warn","message":"/app/scripts/ui.components/calendar/month/monthModel.js was deleted","timestamp":"2013-06-26T11:59:16.068Z"}
+{"level":"info","message":"Template file for /app/scripts/ui.components/calendar/calendarLayout.js was created and path inserted into define area","timestamp":"2013-06-26T18:12:02.640Z"}

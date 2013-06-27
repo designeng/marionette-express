@@ -3,23 +3,34 @@ define([
 		'marionette',
 		'vent',
 		'moment',
-		'hbars!templates/ui.components/calendar/month/monthLayoutTpl',
 		'ui.components/calendar/month/monthHeaderView',
-		'ui.components/calendar/month/monthView'
-], function(_, Marionette, vent, moment, MonthLayoutTpl, MonthHeaderView, MonthView) {
+		'ui.components/calendar/month/monthBodyView',
+		'hbars!templates/ui.components/calendar/month/monthLayoutTpl'
+], function(_, Marionette, vent, moment, MonthHeaderView, MonthBodyView, MonthLayoutTpl) {
 
 	'use strict';
 
-	var monthLayout = Marionette.Layout.extend({
+	var MonthLayout = Marionette.Layout.extend({
 		template: MonthLayoutTpl,
 
+		className: "monthLayout",
+
 		regions: {
-			monthHeaderRegion: "#monthHeader",
-			monthBodyRegion: "#monthBody"
+			monthNameRegion: ".monthLayout__monthName",
+			monthHeaderRegion: ".monthLayout__monthHeader",
+			monthBodyRegion: ".monthLayout__monthBody"
 		},
 
-		initialize: function() {
-			console.log("init")
+		//may be not strictly, and creating MonthLayoutModel is more true way...
+		//options.monthMoment - the current day (or current day plus N)
+		initialize: function(options) {
+			//this._monthMoment = options.monthMoment;
+			this._left = options.model.get("left");
+		},
+
+		onRender: function() {
+			this.$el.css("left", this._left);
+			this.$el.find("#monthName").html(this.model.get("monthNumber"));
 		},
 
 		bindUIElements: function() {
@@ -34,19 +45,17 @@ define([
 		},
 
 		bindMonthBody: function() {
-			var a = moment();
-			var monthModel = {
-				year: a.format("YYYY"),
-				monthNumber: a.format("MM"),
-				monthName: a.format("MMMM")
-			}
-			var monthView = new MonthView({
-				model: monthModel
-			});
+			var monthBodyView = new MonthBodyView({
+				model: {
+					year: this.model.get("year"),
+					monthNumber: this.model.get("monthNumber")
+				}
 
-			this.monthBodyRegion.show(monthView);
+			});
+			this.monthBodyRegion.show(monthBodyView);
+
 		}
 	});
 
-	return monthLayout;
+	return MonthLayout;
 });

@@ -6,7 +6,7 @@ define([
         'vent',
         'i18n!nls/general',
         'hbars!templates/views/extendedTemplateParamsViewTpl'
-    ], function(Backbone, _, Marionette, Handlebars, vent, localizedText, extendedTemplateParamsViewTpl) {
+    ], function(Backbone, _, Marionette, Handlebars, vent, localized, extendedTemplateParamsViewTpl) {
 
         'use strict';
 
@@ -14,18 +14,15 @@ define([
                 template: extendedTemplateParamsViewTpl,
 
                 render: function() {
-                    var templateParams = _.extend({}, this.model, localizedText),
+                    var templateParams = _.extend({}, this.model, localized),
                         renderedTemplate = this.template(templateParams);
                     this.$el.html(renderedTemplate);
                     return this;
                 },
 
-
-
-
-
-
-
+                someFunc: function(){
+                    var arr = ["test", 1, 2, 3, 4, 5, []]
+                }
 
 
             });

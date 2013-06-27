@@ -36,7 +36,10 @@
     "js-beautify": "",
     "async": "",
     "utils": "",
-    "dateformat": "1.0.2-1.2.3"
+    "dateformat": "1.0.2-1.2.3",
+    "handlebars": "~1.0.12",
+    "semver": "~1.1.4",
+    "lazy": "~1.0.11"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
@@ -49,7 +52,9 @@
     "grunt-contrib-jasmine": "~0.4.2",
     "grunt-template-jasmine-istanbul": "~0.2.4",
     "grunt-plato": "~0.2.0",
-    "grunt-contrib-watch": "~0.2.0"
+    "grunt-contrib-watch": "~0.2.0",
+    "express3-handlebars": "~0.4.1",
+    "grunt-directives": "~0.1.2"
   },
   "readmeFilename": "README.md",
   "_id": "grunt-autocreationtests@0.0.5",

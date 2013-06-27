@@ -7,7 +7,7 @@ define([
         'vent',
         'i18n!nls/general',
         'hbars!templates/views/makeViewTpl'
-    ], function(Backbone, _, Marionette, Handlebars, vent, localizedText, makeViewTpl) {
+    ], function(Backbone, _, Marionette, Handlebars, vent, localized, makeViewTpl) {
 
         'use strict';
 
@@ -15,7 +15,7 @@ define([
                 template: makeViewTpl,
 
                 render: function() {
-                    var templateParams = _.extend({}, this.model, localizedText),
+                    var templateParams = _.extend({}, this.model, localized),
                         renderedTemplate = this.template(templateParams);
                     this.$el.html(renderedTemplate);
                     return this;
